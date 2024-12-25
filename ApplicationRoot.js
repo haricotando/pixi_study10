@@ -3,6 +3,7 @@ import { ExApplicationRoot } from "/class/display/ExApplicationRoot.js";
 import GraphicsHelper from "/class/helper/GraphicsHelper.js";
 import Utils from "/class/util/Utils.js";
 import { UIKitButton } from "/class/ui/UIKitButton.js";
+import { GameReady } from "/GameReady.js";
 
 export class ApplicationRoot extends ExApplicationRoot {
     
@@ -17,7 +18,8 @@ export class ApplicationRoot extends ExApplicationRoot {
     */
     init(){
         const _this = this;
-        const ssURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTG46XRL7bpMsWPWHyxBbXzDD17TkCtwicyOZVx03XywleKxopA4Sd1phRe-0oPfcV76NxEwhoJLpsb/pub?gid=0&single=true&output=csv';
+        const ssURL = Utils.addCacheBuster(dp.csvPath);
+        
         const parseCSV = (data) => {
             const rows = [];
             let currentRow = [];
@@ -75,34 +77,30 @@ export class ApplicationRoot extends ExApplicationRoot {
                 return entry;
             });
             dp.assets.csv = result;
-            _this.appStandBy();
+            _this.initDeck();
             } catch (error) {
-                console.error('Error fetching spreadsheet data:', error);
+                console.error(error);
             }
         }
         fetchSpreadsheetData();
     }
 
-    appStandBy(){
-        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, {color:0xFF00FF, width:2}, {color:0xEFEFEF}));
-        this.startApp();
+    initDeck(){
+        for(let i = 0; i<dp.assets.csv.length; i++){
+            for(let ii = 0; ii<dp.assets.csv[i].quantity; ii++){
+                dp.deck.push(dp.assets.csv[i].id);
+            }
+        }
+        this.addChild(new GameReady());
     }
 
     startApp(){
         /**
-         * 画像のテスト
-        */
-        const imageSample = PIXI.Sprite.from(dp.assets.flowerTop);
-        this.addChild(imageSample);
-        Utils.layoutCenter(imageSample, dp.stageRect)
-        Utils.pivotCenter(imageSample);
-        
-        /**
         * フォントのテスト
        */
         const textSample = this.addChild(new PIXI.Text("APP ROOT", {
-            fontFamily: 'Inter', 
-            fontWeight: 700,
+            fontFamily: 'Dela+Gothic+One', 
+            fontWeight: 400,
             fontSize: 35, fill: 0x545550,
             align: 'center'
             // letterSpacing: 15,
@@ -115,9 +113,21 @@ export class ApplicationRoot extends ExApplicationRoot {
     }
     
     initAssetLoader(){
-        PIXI.Assets.add('flowerTop', 'https://pixijs.com/assets/flowerTop.png');
+        PIXI.Assets.add('cardCommon', '/assets/card_common.png');
+        PIXI.Assets.add('cardA', '/assets/card_a.png');
+        PIXI.Assets.add('cardB', '/assets/card_b.png');
+        PIXI.Assets.add('cardC', '/assets/card_c.png');
+        PIXI.Assets.add('cardD', '/assets/card_d.png');
+        PIXI.Assets.add('cardE', '/assets/card_e.png');
+        PIXI.Assets.add('cardF', '/assets/card_f.png');
         this._assetsLoad = [
-            'flowerTop',
+            'cardCommon',
+            'cardA',
+            'cardB',
+            'cardC',
+            'cardD',
+            'cardE',
+            'cardF',
         ];
         this.loadAssets();
     }

@@ -165,6 +165,23 @@ class Utils {
         return parseFloat(number.toFixed(digit));
     }
 
+    /** ------------------------------------------------------------
+     * 素数判定
+     * @param {number} n - 判定する数字
+     */
+    static isPrime(n){
+        if (n <= 1) return false;
+        if (n === 2 || n === 3) return true;
+        if (n % 2 === 0) return false;
+        const limit = Math.floor(Math.sqrt(n));
+        for (let i = 3; i <= limit; i += 2) {
+            if (n % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /** ============================================================
      * Conversion
      */
@@ -269,6 +286,76 @@ class Utils {
         return button;
     }
 
+    /** ============================================================
+     * 配列／オブジェクト
+     */
+    /**
+     * 配列をシャッフルする、破壊的変更
+     * @param {array} array - シャッフル対象の配列
+     */
+    static shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    /**
+     * 配列内のObject.id をキーに検索する
+     * @param {array} array - 走査対象の配列
+     * @param {number} id - idの値
+     * @returns 該当の配列
+    */
+   static findObjectById(array, id) {
+       return array.find(obj => obj.id === id);
+    }
+    
+    /**
+     * 配列内のObject.XX キーを指定して検索する
+     * @param {array} array - 走査対象の配列
+     * @param {string} key - 検索キー
+     * @param {number or string, any} value - 検索の値
+     * @returns 該当の配列
+     */
+    static findObjectByKey(array, key, value) {
+        return array.find(obj => obj[key] === value);
+    }
+
+    /** ============================================================
+     * Snippets
+     */
+
+    /**
+     * 
+     * @param {string} url - キャッシュを追加するURL
+     * @returns キャッシュバスターを追加したURL
+     */
+    static addCacheBuster(url) {
+        const cacheBuster = `cachebuster=${new Date().getTime()}`;
+        if (url.includes('?')) {
+            return `${url}&${cacheBuster}`;
+        } else {
+            return `${url}?${cacheBuster}`;
+        }
+    }
+
+    static snapshotPos(target){
+        target.snapshot = {
+            x     : target.x,
+            y     : target.y,
+            width : target.width,
+            height: target.height,
+            scale : target.scale,
+        };
+        
+    }
+
+
+
+
+
+
+
 
     /* ############################################################
 
@@ -320,15 +407,15 @@ class Utils {
         return sprite;
     }
 
-    static snapshotPos(target){
-        target.snapshot = {
-            x:      target.x,
-            y:      target.y,
-            width:  target.width,
-            height: target.height
-        };
+    // static snapshotPos(target){
+    //     target.snapshot = {
+    //         x:      target.x,
+    //         y:      target.y,
+    //         width:  target.width,
+    //         height: target.height
+    //     };
         
-    }
+    // }
 
     // static snapshotState(target){
     //     console.log(target)
