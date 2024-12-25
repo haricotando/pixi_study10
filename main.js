@@ -102,6 +102,7 @@ function listenWindowResize(){
     }
     window.addEventListener('load', screenResize);
     window.addEventListener('resize',screenResize, false);
+    screenResize();
 }
 
 /* ------------------------------------------------------------
