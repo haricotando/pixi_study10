@@ -18,7 +18,12 @@ export class ApplicationRoot extends ExApplicationRoot {
     */
     init(){
         const _this = this;
-        const ssURL = Utils.addCacheBuster(dp.csvPath);
+        /**
+         * @todo
+         * キャッシュバスターを戻す
+         */
+        const ssURL = dp.csvPath;
+        // const ssURL = Utils.addCacheBuster(dp.csvPath);
         
         const parseCSV = (data) => {
             const rows = [];
@@ -120,6 +125,8 @@ export class ApplicationRoot extends ExApplicationRoot {
         PIXI.Assets.add('cardD', '/assets/card_d.png');
         PIXI.Assets.add('cardE', '/assets/card_e.png');
         PIXI.Assets.add('cardF', '/assets/card_f.png');
+        PIXI.Assets.add('snd_success', 'https://pixijs.io/sound/examples/resources/success.mp3');
+        PIXI.Assets.add('snd_car', 'https://pixijs.io/sound/examples/resources/car.mp3');
         this._assetsLoad = [
             'cardCommon',
             'cardA',
@@ -128,6 +135,8 @@ export class ApplicationRoot extends ExApplicationRoot {
             'cardD',
             'cardE',
             'cardF',
+            'snd_success',
+            'snd_car'
         ];
         this.loadAssets();
     }
