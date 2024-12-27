@@ -26,6 +26,7 @@ export class GameReady extends PIXI.Container {
                 .to(card.scale, {x:card.snapshot.scale.x, y:card.snapshot.scale.y, ease:'back.out(4)'})
                 .to(card, {alpha:1, rotation: 0}, '<')
             
+            if(countX < 3){
                 countX ++;
             }else{
                 countX = 0;
