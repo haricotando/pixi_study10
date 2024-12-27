@@ -24,24 +24,68 @@ export class AssetLoader extends PIXI.Container {
      * アセット登録
      */
     addAssets(){
-        PIXI.Assets.add('cardCommon', '/assets/card_common.png');
-        PIXI.Assets.add('cardA', '/assets/card_a.png');
-        PIXI.Assets.add('cardB', '/assets/card_b.png');
-        PIXI.Assets.add('cardC', '/assets/card_c.png');
-        PIXI.Assets.add('cardD', '/assets/card_d.png');
-        PIXI.Assets.add('cardE', '/assets/card_e.png');
-        PIXI.Assets.add('cardF', '/assets/card_f.png');
+
+        PIXI.Assets.add('animal1', '/assets/bit/animal1.png');
+        PIXI.Assets.add('animal2', '/assets/bit/animal2.png');
+        PIXI.Assets.add('burst1', '/assets/bit/burst1.png');
+        PIXI.Assets.add('burst2', '/assets/bit/burst2.png');
+        PIXI.Assets.add('cardpick1', '/assets/bit/cardpick1.png');
+        PIXI.Assets.add('cardpick2', '/assets/bit/cardpick2.png');
+        PIXI.Assets.add('cardtake1', '/assets/bit/cardtake1.png');
+        PIXI.Assets.add('fallguy1', '/assets/bit/fallguy1.png');
+        PIXI.Assets.add('fallguy2', '/assets/bit/fallguy2.png');
+        PIXI.Assets.add('hand1', '/assets/bit/hand1.png');
+        PIXI.Assets.add('hand2', '/assets/bit/hand2.png');
+        PIXI.Assets.add('joker1', '/assets/bit/joker1.png');
+        PIXI.Assets.add('joker2', '/assets/bit/joker2.png');
+        PIXI.Assets.add('joker3', '/assets/bit/joker3.png');
+        PIXI.Assets.add('lock1', '/assets/bit/lock1.png');
+        PIXI.Assets.add('lock2', '/assets/bit/lock2.png');
+        PIXI.Assets.add('offercard1', '/assets/bit/offercard1.png');
+        PIXI.Assets.add('offercard2', '/assets/bit/offercard2.png');
+        PIXI.Assets.add('peace1', '/assets/bit/peace1.png');
+        PIXI.Assets.add('person_duo1', '/assets/bit/person_duo1.png');
+        PIXI.Assets.add('person_trio1', '/assets/bit/person_trio1.png');
+        PIXI.Assets.add('person_trio2', '/assets/bit/person_trio2.png');
+        PIXI.Assets.add('revo1', '/assets/bit/revo1.png');
+        PIXI.Assets.add('revo2', '/assets/bit/revo2.png');
+        PIXI.Assets.add('spining1', '/assets/bit/spining1.png');
+        PIXI.Assets.add('spot1', '/assets/bit/spot1.png');
+        PIXI.Assets.add('spot2', '/assets/bit/spot2.png');
+        
         PIXI.Assets.add('snd_success', 'https://pixijs.io/sound/examples/resources/success.mp3');
         PIXI.Assets.add('snd_car', 'https://pixijs.io/sound/examples/resources/car.mp3');
         
         this._assetsLoad = [
-            'cardCommon',
-            'cardA',
-            'cardB',
-            'cardC',
-            'cardD',
-            'cardE',
-            'cardF',
+
+            'animal1',
+            'animal2',
+            'burst1',
+            'burst2',
+            'cardpick1',
+            'cardpick2',
+            'cardtake1',
+            'fallguy1',
+            'fallguy2',
+            'hand1',
+            'hand2',
+            'joker1',
+            'joker2',
+            'joker3',
+            'lock1',
+            'lock2',
+            'offercard1',
+            'offercard2',
+            'peace1',
+            'person_duo1',
+            'person_trio1',
+            'person_trio2',
+            'revo1',
+            'revo2',
+            'spining1',
+            'spot1',
+            'spot2',
+
             'snd_success',
             'snd_car'
         ];
@@ -136,11 +180,21 @@ export class AssetLoader extends PIXI.Container {
     }
 
     initDeck(){
+        console.log('csv length:', dp.assets.csv.length);
+        let totalcount = 0;
         for(let i = 0; i<dp.assets.csv.length; i++){
+            console.log(dp.assets.csv[i].name);
+            // console.log(dp.assets.csv[i].quantity);
+            
             for(let ii = 0; ii<dp.assets.csv[i].quantity; ii++){
+                totalcount ++;
                 dp.deck.push(dp.assets.csv[i].id);
             }
         }
+        console.log(totalcount);
+        
+        // console.log(dp.deck.length);
+        
         this.emit("onComplete", { 
             isAssetLoaded : true,
             message: "アセット読み込み完了"
