@@ -180,20 +180,11 @@ export class AssetLoader extends PIXI.Container {
     }
 
     initDeck(){
-        console.log('csv length:', dp.assets.csv.length);
-        let totalcount = 0;
         for(let i = 0; i<dp.assets.csv.length; i++){
-            console.log(dp.assets.csv[i].name);
-            // console.log(dp.assets.csv[i].quantity);
-            
             for(let ii = 0; ii<dp.assets.csv[i].quantity; ii++){
-                totalcount ++;
                 dp.deck.push(dp.assets.csv[i].id);
             }
         }
-        console.log(totalcount);
-        
-        // console.log(dp.deck.length);
         
         this.emit("onComplete", { 
             isAssetLoaded : true,
