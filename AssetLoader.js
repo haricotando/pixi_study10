@@ -10,12 +10,22 @@ export class AssetLoader extends PIXI.Container {
         this._loaded = 0;
         this.isAssetLoaded = false;
 
-        this.label = this.addChild(new PIXI.Text("...", {
+        this.labelContainer = this.addChild(new PIXI.Container());
+
+        this.labelPercent = this.addChild(new PIXI.Text("...", {
             fontFamily: 'Inter', 
             fontWeight: 700,
             fontSize: 65, fill: 0x545550,
         }));
-        this.label.anchor.set(0.5);
+        this.labelPercent.anchor.set(0.5);
+
+        this.labelAdditional = this.addChild(new PIXI.Text("", {
+            fontFamily: 'Inter', 
+            fontWeight: 700,
+            fontSize: 30, fill: 0x545550,
+        }));
+        this.labelAdditional.anchor.set(0.5);
+        this.labelAdditional.y = 50;
         
         this.addAssets();
     }
@@ -91,7 +101,7 @@ export class AssetLoader extends PIXI.Container {
         ];
 
         const onProgress = (e) => {
-            this.label.text = `${Math.round(e * 100)}%`;
+            this.labelPercent.text = `${Math.round(e * 100)}%`;
         }
 
         const assetsPromise = PIXI.Assets.load(this._assetsLoad, onProgress);
@@ -99,6 +109,7 @@ export class AssetLoader extends PIXI.Container {
         assetsPromise.then((items) => {
             dp.assets = items;
             this.isAssetLoaded = true;
+            this.labelAdditional.text = 'csv load';
             this.loadCSV();
             // this.emit("onComplete", { 
             //     isAssetLoaded : true,
@@ -115,6 +126,7 @@ export class AssetLoader extends PIXI.Container {
         const ssURL = Utils.addCacheBuster(dp.csvPath);
         
         const parseCSV = (data) => {
+            this.labelAdditional.text = 'csv parse';
             const rows = [];
             let currentRow = [];
             let insideQuote = false;
