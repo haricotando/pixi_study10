@@ -2,13 +2,14 @@ import Utils from "/class/util/Utils.js";
 import { dataProvider, dp } from "/dataProvider.js";
 import { ApplicationRoot } from "/ApplicationRoot.js";
 import { viewQRcode } from "/viewQRcode.js";
+import { ApplicationRootNoSleep } from "/ApplicationRootNoSleep.js";
 
 console.log(PIXI.VERSION)
 /* ------------------------------------------------------------
     変数定義
 ------------------------------------------------------------ */
 const allowMobileOnly = false;
-const backgroundColor = 0xEFEFEF;
+const backgroundColor = 0x1A1F22;
 const basePCView = {width: 980, height: 1669};
 
 /* ------------------------------------------------------------
@@ -17,6 +18,7 @@ const basePCView = {width: 980, height: 1669};
 WebFont.load({
     google: {
         families: ['Inter:100,200,300,400,700', 'Material+Icons'],
+        // families: ['Noto Sans Japanese:800', 'Inter:100,200,300,400,700', 'Material+Icons'],
     },
     
     active: () => {

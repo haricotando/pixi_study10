@@ -26,7 +26,6 @@ export class GameReady extends PIXI.Container {
                 .to(card.scale, {x:card.snapshot.scale.x, y:card.snapshot.scale.y, ease:'back.out(4)'})
                 .to(card, {alpha:1, rotation: 0}, '<')
             
-                if(countX < 3){
                 countX ++;
             }else{
                 countX = 0;
@@ -68,6 +67,8 @@ export class GameReady extends PIXI.Container {
             setTimeout(() => {
                 PIXI.sound.play('snd_success');
             }, 3000);
+
+            gsap.to(button.scale, {x:0.1, y:0.1, duration:0.5, ease:'bounce.out'})
 
             // this.emit("customEvent", { 
             //     target : background,
