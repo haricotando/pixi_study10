@@ -1,9 +1,8 @@
 import { dataProvider, dp } from "/dataProvider.js";
-import { ExApplicationRoot } from "/class/display/ExApplicationRoot.js";
 import GraphicsHelper from "/class/helper/GraphicsHelper.js";
 import Utils from "/class/util/Utils.js";
 
-export class ApplicationRootNoSleep extends ExApplicationRoot {
+export class ApplicationRootNoSleep extends PIXI.Container {
     
     constructor() {
         super();
