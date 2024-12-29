@@ -45,7 +45,8 @@ export class IntroDeckAnimation extends PIXI.Container {
         const coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000, alpha:0.75}));
 
         Utils.shuffleArray(dp.deck);
-        for(let i = 0; i<dp.deck.length; i++){
+        const maxDisp = dp.deck.length > 20 ? 20 : dp.deck.length;
+        for(let i = 0; i < maxDisp; i++){
             let card = this.imageTable.addChild(new Card(dp.deck[i]));
             card.alpha = 0;
             Utils.resizeImage(card, {width: gridX, height: gridX})

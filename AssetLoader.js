@@ -34,6 +34,7 @@ export class AssetLoader extends PIXI.Container {
      * アセット登録
      */
     addAssets(){
+        PIXI.Assets.add('banana_slip1', '/assets/bit/banana_slip1.png');
         PIXI.Assets.add('animal1', '/assets/bit/animal1.png');
         PIXI.Assets.add('animal2', '/assets/bit/animal2.png');
         PIXI.Assets.add('burst1', '/assets/bit/burst1.png');
@@ -77,6 +78,7 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('start_catch2', '/assets/snd/start_catch2.mp3');
         
         this._assetsLoad = [
+            'banana_slip1',
             'animal1',
             'animal2',
             'burst1',

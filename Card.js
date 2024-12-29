@@ -59,7 +59,7 @@ export class Card extends PIXI.Container {
         const textName = cardContainer.addChild(new PIXI.Text("...", {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
-            fontSize: 240, fill: 0xEFEFEF,
+            fontSize: 200, fill: 0xEFEFEF,
             breakWords: true,
             wordWrap: true,
             wordWrapWidth: cardImage.width - 30,
