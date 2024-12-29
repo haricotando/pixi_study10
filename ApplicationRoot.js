@@ -2,7 +2,8 @@ import { dataProvider, dp } from "/dataProvider.js";
 import GraphicsHelper from "/class/helper/GraphicsHelper.js";
 import { AssetLoader } from "/AssetLoader.js";
 import Utils from "/class/util/Utils.js";
-import {GameReady} from "/GameReady.js";
+import { Instruction } from "/Instruction.js";
+import { GameContainer } from "/GameContainer.js";
 
 export class ApplicationRoot extends PIXI.Container {
     
@@ -21,9 +22,13 @@ export class ApplicationRoot extends PIXI.Container {
                 .to(assetLoader, {alpha:0, duration: 0.2, ease:'none'})
                 .call(()=>{
                     this.removeChild(assetLoader);
-                    this.addChild(new GameReady());
+                    this.addChild(new Instruction());
                 });
         });
+    }
+
+    initGameContainer(){
+        this.addChild(new GameContainer());
     }
 
 

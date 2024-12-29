@@ -10,20 +10,23 @@ console.log(PIXI.VERSION)
 ------------------------------------------------------------ */
 const allowMobileOnly = false;
 const backgroundColor = 0x1A1F22;
-const basePCView = {width: 980, height: 1669};
+const basePCView = {width: 980, height: 1668};
 
 /* ------------------------------------------------------------
     アセット読み込み
 ------------------------------------------------------------ */
 WebFont.load({
     google: {
-        families: ['Inter:100,200,300,400,700', 'Material+Icons'],
+        families: ['Inter:200,400', 'Kaisei Decol:700'],
+        // families: ['Inter:100,200,300,400,700', 'Material+Icons'],
         // families: ['Noto Sans Japanese:800', 'Inter:100,200,300,400,700', 'Material+Icons'],
     },
     
     active: () => {
         console.log('OK: Font');
-        init();
+        setTimeout(() => {
+            init();
+        }, 1000);
     },
 
     // フォント読み込み失敗時

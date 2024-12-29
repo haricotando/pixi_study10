@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    background-color: #EFEFEF;
+    /* background-color: #EFEFEF; */
+    background-color: #1A1F22;
 }
 
 canvas {

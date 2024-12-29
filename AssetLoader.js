@@ -14,18 +14,18 @@ export class AssetLoader extends PIXI.Container {
 
         this.labelPercent = this.addChild(new PIXI.Text("...", {
             fontFamily: 'Inter', 
-            fontWeight: 700,
-            fontSize: 65, fill: 0x545550,
+            fontWeight: 200,
+            fontSize: 100, fill: 0x545550,
         }));
         this.labelPercent.anchor.set(0.5);
 
         this.labelAdditional = this.addChild(new PIXI.Text("", {
             fontFamily: 'Inter', 
-            fontWeight: 700,
+            fontWeight: 400,
             fontSize: 30, fill: 0x545550,
         }));
         this.labelAdditional.anchor.set(0.5);
-        this.labelAdditional.y = 50;
+        this.labelAdditional.y = 70;
         
         this.addAssets();
     }
@@ -34,7 +34,10 @@ export class AssetLoader extends PIXI.Container {
      * アセット登録
      */
     addAssets(){
-
+        PIXI.Assets.add('cardDesign_descriptionBG', '/assets/description_bg.png');
+        
+        PIXI.Assets.add('introcard', '/assets/bit/introcard.png');
+        
         PIXI.Assets.add('animal1', '/assets/bit/animal1.png');
         PIXI.Assets.add('animal2', '/assets/bit/animal2.png');
         PIXI.Assets.add('burst1', '/assets/bit/burst1.png');
@@ -62,11 +65,20 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('spining1', '/assets/bit/spining1.png');
         PIXI.Assets.add('spot1', '/assets/bit/spot1.png');
         PIXI.Assets.add('spot2', '/assets/bit/spot2.png');
+
+        PIXI.Assets.add('snd_start_catch1', '/assets/snd/start_catch1.mp3');
+        PIXI.Assets.add('snd_start_catch2', '/assets/snd/start_catch2.mp3');
+        PIXI.Assets.add('snd_rumbling1', '/assets/snd/rumbling1.mp3');
+        PIXI.Assets.add('snd_insight2', '/assets/snd/insight2.mp3');
+        PIXI.Assets.add('snd_1tick', '/assets/snd/1tick.m4a');
         
-        PIXI.Assets.add('snd_success', 'https://pixijs.io/sound/examples/resources/success.mp3');
-        PIXI.Assets.add('snd_car', 'https://pixijs.io/sound/examples/resources/car.mp3');
+        // PIXI.Assets.add('snd_success', 'https://pixijs.io/sound/examples/resources/success.mp3');
+        // PIXI.Assets.add('snd_car', 'https://pixijs.io/sound/examples/resources/car.mp3');
         
         this._assetsLoad = [
+            'cardDesign_descriptionBG',
+
+            'introcard',
 
             'animal1',
             'animal2',
@@ -96,8 +108,15 @@ export class AssetLoader extends PIXI.Container {
             'spot1',
             'spot2',
 
-            'snd_success',
-            'snd_car'
+            'snd_start_catch1',
+            'snd_start_catch2',
+            'snd_rumbling1',
+            'snd_insight2',
+            'snd_1tick',
+            
+
+            // 'snd_success',
+            // 'snd_car'
         ];
 
         const onProgress = (e) => {
@@ -109,7 +128,7 @@ export class AssetLoader extends PIXI.Container {
         assetsPromise.then((items) => {
             dp.assets = items;
             this.isAssetLoaded = true;
-            this.labelAdditional.text = 'csv load';
+            this.labelAdditional.text = 'CSV LOADING...';
             this.loadCSV();
             // this.emit("onComplete", { 
             //     isAssetLoaded : true,
@@ -126,7 +145,7 @@ export class AssetLoader extends PIXI.Container {
         const ssURL = Utils.addCacheBuster(dp.csvPath);
         
         const parseCSV = (data) => {
-            this.labelAdditional.text = 'csv parse';
+            this.labelAdditional.text = 'CSV PARSING...';
             const rows = [];
             let currentRow = [];
             let insideQuote = false;
@@ -197,7 +216,18 @@ export class AssetLoader extends PIXI.Container {
                 dp.deck.push(dp.assets.csv[i].id);
             }
         }
-        
+
+        Utils.shuffleArray(dp.deck);
+
+        dp.assets.csv.push(
+            {
+                id: "0", 
+                name: " ", 
+                description: "人間の最高の力は\n計画が崩れたときに何をするかだ", 
+                quantity: 0,
+                imageID: "introcard"}
+        );
+
         this.emit("onComplete", { 
             isAssetLoaded : true,
             message: "アセット読み込み完了"

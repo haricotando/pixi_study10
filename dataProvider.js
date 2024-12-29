@@ -17,6 +17,11 @@ export const dataProvider = {
 
     assets: {},
 
+    game: {
+        currentIndex: 0,
+        nextInterval: 0,
+    },
+
     cardList : [],
     deckXXX: [],
     deck: [],
