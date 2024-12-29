@@ -34,10 +34,6 @@ export class AssetLoader extends PIXI.Container {
      * アセット登録
      */
     addAssets(){
-        PIXI.Assets.add('cardDesign_descriptionBG', '/assets/description_bg.png');
-        
-        PIXI.Assets.add('introcard', '/assets/bit/introcard.png');
-        
         PIXI.Assets.add('animal1', '/assets/bit/animal1.png');
         PIXI.Assets.add('animal2', '/assets/bit/animal2.png');
         PIXI.Assets.add('burst1', '/assets/bit/burst1.png');
@@ -49,6 +45,7 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('fallguy2', '/assets/bit/fallguy2.png');
         PIXI.Assets.add('hand1', '/assets/bit/hand1.png');
         PIXI.Assets.add('hand2', '/assets/bit/hand2.png');
+        PIXI.Assets.add('introcard', '/assets/bit/introcard.png');
         PIXI.Assets.add('joker1', '/assets/bit/joker1.png');
         PIXI.Assets.add('joker2', '/assets/bit/joker2.png');
         PIXI.Assets.add('joker3', '/assets/bit/joker3.png');
@@ -65,21 +62,21 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('spining1', '/assets/bit/spining1.png');
         PIXI.Assets.add('spot1', '/assets/bit/spot1.png');
         PIXI.Assets.add('spot2', '/assets/bit/spot2.png');
-
-        PIXI.Assets.add('snd_start_catch1', '/assets/snd/start_catch1.mp3');
-        PIXI.Assets.add('snd_start_catch2', '/assets/snd/start_catch2.mp3');
-        PIXI.Assets.add('snd_rumbling1', '/assets/snd/rumbling1.mp3');
-        PIXI.Assets.add('snd_insight2', '/assets/snd/insight2.mp3');
-        PIXI.Assets.add('snd_1tick', '/assets/snd/1tick.m4a');
-        
-        // PIXI.Assets.add('snd_success', 'https://pixijs.io/sound/examples/resources/success.mp3');
-        // PIXI.Assets.add('snd_car', 'https://pixijs.io/sound/examples/resources/car.mp3');
+        PIXI.Assets.add('description_bg', '/assets/bit/description_bg.png');
+        PIXI.Assets.add('1tick', '/assets/snd/1tick.m4a');
+        PIXI.Assets.add('4ticks', '/assets/snd/4ticks.mp3');
+        PIXI.Assets.add('heavy_echo1', '/assets/snd/heavy_echo1.mp3');
+        PIXI.Assets.add('heavy_hit1', '/assets/snd/heavy_hit1.mp3');
+        PIXI.Assets.add('heavy_hit2', '/assets/snd/heavy_hit2.mp3');
+        PIXI.Assets.add('insight1', '/assets/snd/insight1.mp3');
+        PIXI.Assets.add('insight2', '/assets/snd/insight2.mp3');
+        PIXI.Assets.add('mid_hit1', '/assets/snd/mid_hit1.mp3');
+        PIXI.Assets.add('rumbling1', '/assets/snd/rumbling1.mp3');
+        PIXI.Assets.add('runbling2', '/assets/snd/runbling2.mp3');
+        PIXI.Assets.add('start_catch1', '/assets/snd/start_catch1.mp3');
+        PIXI.Assets.add('start_catch2', '/assets/snd/start_catch2.mp3');
         
         this._assetsLoad = [
-            'cardDesign_descriptionBG',
-
-            'introcard',
-
             'animal1',
             'animal2',
             'burst1',
@@ -91,6 +88,7 @@ export class AssetLoader extends PIXI.Container {
             'fallguy2',
             'hand1',
             'hand2',
+            'introcard',
             'joker1',
             'joker2',
             'joker3',
@@ -107,16 +105,19 @@ export class AssetLoader extends PIXI.Container {
             'spining1',
             'spot1',
             'spot2',
-
-            'snd_start_catch1',
-            'snd_start_catch2',
-            'snd_rumbling1',
-            'snd_insight2',
-            'snd_1tick',
-            
-
-            // 'snd_success',
-            // 'snd_car'
+            'description_bg',
+            '1tick',
+            '4ticks',
+            'heavy_echo1',
+            'heavy_hit1',
+            'heavy_hit2',
+            'insight1',
+            'insight2',
+            'mid_hit1',
+            'rumbling1',
+            'runbling2',
+            'start_catch1',
+            'start_catch2',
         ];
 
         const onProgress = (e) => {

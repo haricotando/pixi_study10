@@ -60,7 +60,7 @@ export class CardPreparer extends PIXI.Container {
             button.eventMode = 'none';
             this.flipCard();
             this.textAndButton.visible = false;
-            PIXI.sound.play('snd_start_catch1');
+            PIXI.sound.play('start_catch1');
         };
         button.on('pointertap', onTap);
     }

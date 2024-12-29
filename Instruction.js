@@ -20,7 +20,7 @@ export class Instruction extends PIXI.Container {
         textSample.x = dp.stageRect.halfWidth;
         textSample.y = 100;
 
-        const textSample2 = this.addChild(new PIXI.Text("ここに説明を入れる", {
+        const textSample2 = this.addChild(new PIXI.Text("ここに使い方が入る", {
             fontSize: 35, fill: 0xFEFEFE,
         }));
         textSample2.anchor.set(0.5, 0);

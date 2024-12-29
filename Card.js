@@ -39,7 +39,7 @@ export class Card extends PIXI.Container {
         /**
          * descriptionの背景画像
          */
-        const descriptionBG = PIXI.Sprite.from(dataProvider.assets.cardDesign_descriptionBG);
+        const descriptionBG = PIXI.Sprite.from(dataProvider.assets.description_bg);
         cardContainer.addChild(descriptionBG);
         descriptionBG.x = imageMask.x;
         descriptionBG.y = imageMask.y + cardImage.height;
