@@ -18,6 +18,9 @@ export class GameContainer extends PIXI.Container {
         setTimeout(() => {
             PIXI.sound.play('snd_start_catch1');
         }, 0);
+
+        let noSleep = new NoSleep();
+        noSleep.enable();
     }
     
     standby(){
