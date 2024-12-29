@@ -8,8 +8,8 @@ export class GameContainer extends PIXI.Container {
     
     constructor() {
         super();
-        // this.init();
-        this.standby();
+        this.init();
+        // this.standby();
     }
 
     init(){
