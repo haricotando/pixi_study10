@@ -2,6 +2,7 @@ import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
 import { Card } from "/Card.js";
 import Utils from "/class/util/Utils.js";
+import { CommonButton } from "./CommonButton.js";
 
 export class CardPreparer extends PIXI.Container {
     
@@ -13,7 +14,7 @@ export class CardPreparer extends PIXI.Container {
         const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
 
         this.textAndButton = this.addChild(new PIXI.Container());
-        const textSample = this.textAndButton.addChild(new PIXI.Text("standby...", {
+        const textSample = this.textAndButton.addChild(new PIXI.Text("..", {
             fontFamily: 'Inter', 
             fontWeight: 400,
             fontSize: 65, fill: 0xFEFEFE,
@@ -24,7 +25,8 @@ export class CardPreparer extends PIXI.Container {
         textSample.y = 100;
 
         gsap.delayedCall(delay / 1000, ()=>{
-            this.initTextAndButton()
+            this.initTextAndButton();
+            this.onExecuteFX();
         });
 
 
@@ -43,26 +45,26 @@ export class CardPreparer extends PIXI.Container {
         textSample2.x = dp.stageRect.halfWidth;
         textSample2.y = 500;
 
-        const button = this.textAndButton.addChild(new PIXI.Text("カードをめくる", {
-            fontFamily: 'Inter', 
-            fontWeight: 400,
-            fontSize: 85, fill: 0xFEFEFE,
-            // letterSpacing: 15,
-        }));
+        const btnFlipCard = this.textAndButton.addChild(new CommonButton('カードをめくる'));
+        btnFlipCard.x = dp.stageRect.halfWidth;
+        btnFlipCard.y = dp.stageRect.height - 200;
         
-        button.anchor.set(0.5, 0.5);
-        button.x = dp.stageRect.halfWidth;
-        button.y = dp.stageRect.height - 200;
-
-        button.cursor    = 'pointer';
-        button.eventMode = 'static';
+        btnFlipCard.cursor    = 'pointer';
+        btnFlipCard.eventMode = 'static';
         const onTap = (e) => {
-            button.eventMode = 'none';
+            btnFlipCard.eventMode = 'none';
             this.flipCard();
             this.textAndButton.visible = false;
             PIXI.sound.play('start_catch1');
         };
-        button.on('pointertap', onTap);
+
+        btnFlipCard.on('pointertap', onTap);
+
+
+
+
+
+
     }
 
     flipCard(){
@@ -97,6 +99,29 @@ export class CardPreparer extends PIXI.Container {
         button.on('pointertap', onTap);
             
     }
+
+
+
+
+    onExecuteFX(){
+        const fxContainer = this.addChild(new PIXI.Container());
+        const fxCircle = fxContainer.addChild(GraphicsHelper.exDrawCircle(0, 0, 200, {color:0xFFFFFF, width:4}, false));
+        const fxCircleBlack = fxContainer.addChild(GraphicsHelper.exDrawCircle(0, 0, 200, false, {color:0xFFFFFF}));
+        // fxCircle.mask = fxCircleBlack;
+        fxCircleBlack.scale.set(4);
+        gsap.timeline()
+            .to(fxCircle.scale, {x:5, y:5, duration: 0.5, ease:'expo.out'})
+            .to(fxCircleBlack.scale, {x:0.1, y:0.1, duration: 0.4, ease:'expo.out'}, '<')
+        // const fxCircle = fxContainer.addChild(GraphicsHelper.exDrawCircle(0, 0, 200, {color: 0xFFFFFF, width: 4}, false));
+        fxContainer.x = dp.stageRect.halfWidth;
+        fxContainer.y = dp.stageRect.halfHeight;
+        
+    }
+
+
+
+
+
 
 
 

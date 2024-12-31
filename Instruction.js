@@ -1,5 +1,6 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
+import { CommonButton } from "./CommonButton.js";
 
 export class Instruction extends PIXI.Container {
     
@@ -31,28 +32,25 @@ export class Instruction extends PIXI.Container {
     }
     
     initButton(){
-        const button = this.addChild(new PIXI.Text("↓", {
-            fontFamily: 'Inter', 
-            fontWeight: 400,
-            fontSize: 85, fill: 0xFEFEFE,
-            letterSpacing: 15,
-        }));
+        const startButton = this.addChild(new CommonButton('開始する'));
+        startButton.x = dp.stageRect.halfWidth;
+        startButton.y = dp.stageRect.height - 200;
         
-        this.addChild(button)
-        button.anchor.set(0.5, 0.5);
-        button.x = dp.stageRect.halfWidth;
-        button.y = dp.stageRect.height - 200;
-
-        button.cursor    = 'pointer';
-        button.eventMode = 'static';
+        startButton.cursor    = 'pointer';
+        startButton.eventMode = 'static';
         const onTap = (e) => {
-            button.eventMode = 'none';
+            startButton.eventMode = 'none';
             gsap.timeline()
+            // .to(startButton.scale, {x:0.8, y:0.8, duration:0.5, ease:'back.out(5)'});
             .to(this, {alpha:0})
             .call(()=>{
                 this.parent.initGameContainer();
             });
         };
-        button.on('pointertap', onTap);
+
+        startButton.on('pointertap', onTap);
+
+        // bbb.x = 
+
     }
 }
