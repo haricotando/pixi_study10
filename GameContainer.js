@@ -16,7 +16,8 @@ export class GameContainer extends PIXI.Container {
         const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
         this.addChild(new IntroDeckAnimation());
         setTimeout(() => {
-            PIXI.sound.play('start_catch1');
+            PIXI.sound.play('1tick1');
+            // PIXI.sound.play('start_catch1');
         }, 0);
 
         let noSleep = new NoSleep();
@@ -24,12 +25,20 @@ export class GameContainer extends PIXI.Container {
     }
     
     standby(){
+        const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
+        console.log(nextCardInfo.effectTrigger);
+        
+        
         const waitingDuration = this.diceNextInterval();
-        console.log(waitingDuration);
         
         setTimeout(() => {
-            PIXI.sound.play('1tick');
-            // PIXI.sound.play('start_catch2');
+            if(nextCardInfo.effectTrigger == 'immediate'){
+                // PIXI.sound.play('1tick1');
+                PIXI.sound.play('start_catch1');
+            }else{
+                // PIXI.sound.play('1tick2');
+                PIXI.sound.play('start_catch1');
+            }
         }, waitingDuration);
         this.addChild(new CardPreparer(waitingDuration, dp.deck[dp.game.currentIndex]));
         dp.game.currentIndex ++;
@@ -37,7 +46,7 @@ export class GameContainer extends PIXI.Container {
 
     diceNextInterval(){
         const secRange = 1;
-        const minSec = 1;
+        const minSec = 0;
         const randomSec = Math.round(Math.random() * secRange);
         const finalSec = (minSec + randomSec) * 1000;
         return finalSec;

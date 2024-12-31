@@ -50,7 +50,5 @@ export class Instruction extends PIXI.Container {
 
         startButton.on('pointertap', onTap);
 
-        // bbb.x = 
-
     }
 }

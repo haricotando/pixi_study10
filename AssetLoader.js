@@ -64,8 +64,10 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('spot1', '/assets/bit/spot1.png');
         PIXI.Assets.add('spot2', '/assets/bit/spot2.png');
         PIXI.Assets.add('description_bg', '/assets/bit/description_bg.png');
-        PIXI.Assets.add('1tick', '/assets/snd/1tick.m4a');
-        PIXI.Assets.add('4ticks', '/assets/snd/4ticks.mp3');
+        PIXI.Assets.add('1tick1', '/assets/snd/1tick1.m4a');
+        PIXI.Assets.add('1tick2', '/assets/snd/1tick2.m4a');
+        PIXI.Assets.add('1tick3', '/assets/snd/1tick3.m4a');
+        PIXI.Assets.add('1tick4', '/assets/snd/1tick4.m4a');
         PIXI.Assets.add('heavy_echo1', '/assets/snd/heavy_echo1.mp3');
         PIXI.Assets.add('heavy_hit1', '/assets/snd/heavy_hit1.mp3');
         PIXI.Assets.add('heavy_hit2', '/assets/snd/heavy_hit2.mp3');
@@ -108,8 +110,10 @@ export class AssetLoader extends PIXI.Container {
             'spot1',
             'spot2',
             'description_bg',
-            '1tick',
-            '4ticks',
+            '1tick1',
+            '1tick2',
+            '1tick3',
+            '1tick4',
             'heavy_echo1',
             'heavy_hit1',
             'heavy_hit2',
