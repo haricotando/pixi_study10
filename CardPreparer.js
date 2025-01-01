@@ -128,8 +128,8 @@ export class CardPreparer extends PIXI.Container {
             
             
             .set(fxCircle5, {visible: true}, '<0.1')
-            .to(fxCircle5.scale, {x:5, y:5, duration: 0.5, ease:'expo.out'}, '<')
-            .to(fxCircle5.scale, {x:20, y:20, duration: 0.2, ease:'expo.in'})
+            .to(fxCircle5.scale, {x:5, y:5, duration: 0.7, ease:'expo.out'}, '<')
+            .to(fxCircle5.scale, {x:20, y:20, duration: 0.3, ease:'expo.in'})
             .call(()=>{
                 fxfx.visible = false;
                 this.initTextAndButton();

@@ -1,6 +1,7 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
 import { CommonButton } from "./CommonButton.js";
+import Utils from "./class/util/Utils.js";
 
 export class Instruction extends PIXI.Container {
     
@@ -11,28 +12,34 @@ export class Instruction extends PIXI.Container {
 
     init(){
         const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
-        const textSample = this.addChild(new PIXI.Text("INSTRUCTION", {
+        const textTitle = this.addChild(new PIXI.Text("INSTRUCTION", {
             fontFamily: 'Inter', 
             fontWeight: 400,
             fontSize: 65, fill: 0xFEFEFE,
             letterSpacing: 15,
         }));
-        textSample.anchor.set(0.5, 0);
-        textSample.x = dp.stageRect.halfWidth;
-        textSample.y = 100;
+        textTitle.anchor.set(0.5, 0);
+        textTitle.x = dp.stageRect.halfWidth;
+        textTitle.y = 100;
 
-        const textSample2 = this.addChild(new PIXI.Text("ここに使い方が入る", {
-            fontSize: 35, fill: 0xFEFEFE,
+        const textDescripton = this.addChild(new PIXI.Text("そのうちここに\n使い方を入れる", {
+            fontFamily: 'Kaisei Decol', 
+            fontWeight: 700,
+            fontSize: 50, fill: 0xFEFEFE,
+            align: 'center',
+            breakWords: true,
+            wordWrap: true,
+            wordWrapWidth: 800,
         }));
-        textSample2.anchor.set(0.5, 0);
-        textSample2.x = dp.stageRect.halfWidth;
-        textSample2.y = 500;
-        
+        textDescripton.anchor.set(0.5, 0);
+        textDescripton.x = dp.stageRect.halfWidth;
+        textDescripton.y = 500;
+
         this.initButton();
     }
     
     initButton(){
-        const startButton = this.addChild(new CommonButton('開始する'));
+        const startButton = this.addChild(new CommonButton('進む'));
         startButton.x = dp.stageRect.halfWidth;
         startButton.y = dp.stageRect.height - 200;
         
@@ -40,12 +47,7 @@ export class Instruction extends PIXI.Container {
         startButton.eventMode = 'static';
         const onTap = (e) => {
             startButton.eventMode = 'none';
-            gsap.timeline()
-            // .to(startButton.scale, {x:0.8, y:0.8, duration:0.5, ease:'back.out(5)'});
-            .to(this, {alpha:0})
-            .call(()=>{
-                this.parent.initGameContainer();
-            });
+            this.parent.initGameContainer();
         };
 
         startButton.on('pointertap', onTap);

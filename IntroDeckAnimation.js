@@ -2,6 +2,7 @@ import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
 import { Card } from "/Card.js";
 import Utils from "/class/util/Utils.js";
+import { CommonButton } from "/CommonButton.js";
 
 export class IntroDeckAnimation extends PIXI.Container {
     
@@ -18,22 +19,20 @@ export class IntroDeckAnimation extends PIXI.Container {
         const card0 = this.addChild(new Card(0));
         card0.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
         card0.scale.set(1.5);
+        card0.rotation = Utils.degreesToRadians(-7);
         card0.alpha = 0;
         gsap.timeline({delay:0.1})
             .to(card0, {alpha:1, duration:0.5, ease:'none'})
-            .to(card0.scale, {x:0.8, y:0.8, duration:0.3, ease:'expo.out'}, '<')
-            .to(card0.scale, {x:0.79, y:0.79, duration:0.4, ease:'sine.inOut'})
-            .to(card0, {y:0, duration:0.5, ease:'circ.in'}, '<0.3')
-            .to(card0, {alpha:0, duration:0.3, ease:'none'}, '<0.3')
+            .to(card0.scale, {x:0.8, y:0.8, duration:1.1, ease:'expo.out'}, '<')
+            .to(card0, {rotation:Utils.degreesToRadians(0), duration:0.5, ease:'sine.out'}, '<')
+            .to(card0.scale, {x:0.78, y:0.78, duration:0.5, ease:'sine.inOut', delay: 0.4})
+            .to(card0, {y:0, duration:0.5, ease:'circ.in'}, '<0.1')
+            .to(card0, {alpha:0, duration:0.3, ease:'none'}, '<0.2')
             .call(()=>{
-                card0.visible = false;
+                this.initOptionScreen();
             });
-        gsap.delayedCall(0.9, ()=>{
-            this.initOptionScreen();
-        });
         card0.zIndex = 10;
     };
-
 
     initCardTable(){
         let countX = 0;
@@ -42,7 +41,10 @@ export class IntroDeckAnimation extends PIXI.Container {
         const gridX = Math.round((dp.stageRect.width - margin) / 4);
 
         this.imageTable = this.addChild(new PIXI.Container());
-        const coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000, alpha:0.75}));
+        const coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000}));
+        coverBox.alpha = 0;
+        gsap.timeline({delay:2.3})
+            .to(coverBox, {alpha:0.5, duration:0.5, ease:'none'})
 
         Utils.shuffleArray(dp.deck);
         const maxDisp = dp.deck.length > 20 ? 20 : dp.deck.length;
@@ -52,9 +54,9 @@ export class IntroDeckAnimation extends PIXI.Container {
             Utils.resizeImage(card, {width: gridX, height: gridX})
             card.position.set(countX * gridX + card.width / 2 + margin / 2, countY * card.height + card.height / 2);
             Utils.snapshotPos(card);
-            const tl = gsap.timeline({delay:i / 30 + 0.9})
+            const tl = gsap.timeline({delay:i / 30 + 1.8})
                 .to(card, {alpha:1, y: card.snapshot.y, duration: 0.5}, '<')
-            card.y += 50;
+            card.y += 100;
             if(countX < 3){
                 countX ++;
             }else{
@@ -65,51 +67,39 @@ export class IntroDeckAnimation extends PIXI.Container {
     }
 
     initOptionScreen(){
-    //     const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
-        const textSample = this.addChild(new PIXI.Text("GAME OPTION", {
-            fontFamily: 'Inter', 
-            fontWeight: 400,
-            fontSize: 65, fill: 0xFEFEFE,
-            letterSpacing: 15,
+        const textDescripton = this.addChild(new PIXI.Text("オプション選択が入る予定", {
+            fontFamily: 'Kaisei Decol', 
+            fontWeight: 700,
+            fontSize: 50, fill: 0xFEFEFE,
+            align: 'center',
+            breakWords: true,
+            wordWrap: true,
+            wordWrapWidth: 800,
         }));
-        textSample.anchor.set(0.5, 0);
-        textSample.x = dp.stageRect.halfWidth;
-        textSample.y = 100;
-
-        const textSample2 = this.addChild(new PIXI.Text("ここでオプション選択が入る", {
-            fontSize: 35, fill: 0xFEFEFE,
-        }));
-        textSample2.anchor.set(0.5, 0);
-        textSample2.x = dp.stageRect.halfWidth;
-        textSample2.y = 500;
+        textDescripton.anchor.set(0.5, 0);
+        textDescripton.x = dp.stageRect.halfWidth;
+        textDescripton.y = 500;
         this.initButton();
     }
 
     initButton(){
-        const button = this.addChild(new PIXI.Text("> START", {
-            fontFamily: 'Inter', 
-            fontWeight: 400,
-            fontSize: 85, fill: 0xFEFEFE,
-            // letterSpacing: 15,
-        }));
+        const btnFlipCard = this.addChild(new CommonButton('ゲームを開始'));
+        btnFlipCard.x = dp.stageRect.halfWidth;
+        btnFlipCard.y = dp.stageRect.height - 200;
         
-        this.addChild(button)
-        button.anchor.set(0.5, 0.5);
-        button.x = dp.stageRect.halfWidth;
-        button.y = dp.stageRect.height - 200;
-
-        button.cursor    = 'pointer';
-        button.eventMode = 'static';
+        btnFlipCard.cursor    = 'pointer';
+        btnFlipCard.eventMode = 'static';
         const onTap = (e) => {
-            button.eventMode = 'none';
-            gsap.timeline()
-            .to(this, {alpha:0})
+            btnFlipCard.eventMode = 'none';
+
+            gsap.timeline({delay:0})
             .call(()=>{
                 this.parent.standby();
                 this.parent.removeChild((this));
-                // this.parent.initGameContainer();
             });
         };
-        button.on('pointertap', onTap);
+
+        btnFlipCard.on('pointertap', onTap);
+
     }
 }

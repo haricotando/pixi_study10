@@ -15,7 +15,9 @@ export class ApplicationRoot extends PIXI.Container {
     
     loadAssets(){
         const assetLoader = this.addChild(new AssetLoader());
-        Utils.layoutCenter(assetLoader, dp.stageRect);
+        assetLoader.x = dp.stageRect.halfWidth;
+        assetLoader.y = dp.stageRect.halfHeight-40;
+        // Utils.layoutCenter(assetLoader, dp.stageRect);
         
         assetLoader.on('onComplete', (data) => {
             gsap.timeline({delay: 0.3})
@@ -23,6 +25,7 @@ export class ApplicationRoot extends PIXI.Container {
                 .call(()=>{
                     this.removeChild(assetLoader);
                     this.addChild(new Instruction());
+                    // this.initGameContainer();
                 });
         });
     }

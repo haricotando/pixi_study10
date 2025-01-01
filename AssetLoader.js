@@ -35,6 +35,7 @@ export class AssetLoader extends PIXI.Container {
      */
     addAssets(){
         PIXI.Assets.add('banana_slip1', '/assets/bit/banana_slip1.png');
+        PIXI.Assets.add('joker4', '/assets/bit/joker4.png');
         PIXI.Assets.add('animal1', '/assets/bit/animal1.png');
         PIXI.Assets.add('animal2', '/assets/bit/animal2.png');
         PIXI.Assets.add('burst1', '/assets/bit/burst1.png');
@@ -96,6 +97,7 @@ export class AssetLoader extends PIXI.Container {
             'joker1',
             'joker2',
             'joker3',
+            'joker4',
             'lock1',
             'lock2',
             'offercard1',
@@ -230,9 +232,10 @@ export class AssetLoader extends PIXI.Container {
             {
                 id: "0", 
                 name: " ", 
-                description: "人間の最高の力は\n計画が崩れたときに何をするかだ", 
+                description: "混沌の本質\nそれは公平だ", 
+                // description: "人間の最高の力は\n計画が崩れたときに何をするかだ", 
                 quantity: 0,
-                imageID: "introcard"}
+                imageID: "joker4"}
         );
 
         this.emit("onComplete", { 

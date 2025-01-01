@@ -85,7 +85,7 @@ export class Card extends PIXI.Container {
             breakWords: true,
             wordWrap: true,
             wordWrapWidth: cardImage.width - 100,
-            // lineHeight: 30,
+            lineHeight: 80,
             
             dropShadow: true,
             dropShadowColor: '#000000',
@@ -94,9 +94,9 @@ export class Card extends PIXI.Container {
             dropShadowAngle: 0,
             dropShadowDistance: 0,
         }));
-        textDescription.anchor.set(0.5, 0);
+        textDescription.anchor.set(0.5, 0.5);
         textDescription.text = myData.description;
-        textDescription.position.set(dp.stageRect.halfWidth, descriptionBG.y + 50);
+        textDescription.position.set(dp.stageRect.halfWidth, descriptionBG.y + descriptionBG.height / 2);
 
 
 

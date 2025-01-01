@@ -17,8 +17,10 @@ export class GameContainer extends PIXI.Container {
         this.addChild(new IntroDeckAnimation());
         setTimeout(() => {
             PIXI.sound.play('1tick1');
-            // PIXI.sound.play('start_catch1');
         }, 0);
+        setTimeout(() => {
+            PIXI.sound.play('1tick2');
+        }, 1800);
 
         let noSleep = new NoSleep();
         noSleep.enable();
@@ -33,10 +35,8 @@ export class GameContainer extends PIXI.Container {
         
         setTimeout(() => {
             if(nextCardInfo.effectTrigger == 'immediate'){
-                // PIXI.sound.play('1tick1');
                 PIXI.sound.play('start_catch1');
             }else{
-                // PIXI.sound.play('1tick2');
                 PIXI.sound.play('start_catch1');
             }
         }, waitingDuration);
