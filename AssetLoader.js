@@ -34,72 +34,110 @@ export class AssetLoader extends PIXI.Container {
      * アセット登録
      */
     addAssets(){
-        PIXI.Assets.add('banana_slip1', '/assets/bit/banana_slip1.png');
-        PIXI.Assets.add('joker4', '/assets/bit/joker4.png');
-        PIXI.Assets.add('animal1', '/assets/bit/animal1.png');
-        PIXI.Assets.add('animal2', '/assets/bit/animal2.png');
-        PIXI.Assets.add('burst1', '/assets/bit/burst1.png');
-        PIXI.Assets.add('burst2', '/assets/bit/burst2.png');
-        PIXI.Assets.add('cardpick1', '/assets/bit/cardpick1.png');
-        PIXI.Assets.add('cardpick2', '/assets/bit/cardpick2.png');
-        PIXI.Assets.add('cardtake1', '/assets/bit/cardtake1.png');
-        PIXI.Assets.add('fallguy1', '/assets/bit/fallguy1.png');
-        PIXI.Assets.add('fallguy2', '/assets/bit/fallguy2.png');
-        PIXI.Assets.add('hand1', '/assets/bit/hand1.png');
-        PIXI.Assets.add('hand2', '/assets/bit/hand2.png');
-        PIXI.Assets.add('introcard', '/assets/bit/introcard.png');
-        PIXI.Assets.add('joker1', '/assets/bit/joker1.png');
-        PIXI.Assets.add('joker2', '/assets/bit/joker2.png');
-        PIXI.Assets.add('joker3', '/assets/bit/joker3.png');
-        PIXI.Assets.add('lock1', '/assets/bit/lock1.png');
-        PIXI.Assets.add('lock2', '/assets/bit/lock2.png');
-        PIXI.Assets.add('offercard1', '/assets/bit/offercard1.png');
-        PIXI.Assets.add('offercard2', '/assets/bit/offercard2.png');
-        PIXI.Assets.add('peace1', '/assets/bit/peace1.png');
-        PIXI.Assets.add('person_duo1', '/assets/bit/person_duo1.png');
-        PIXI.Assets.add('person_trio1', '/assets/bit/person_trio1.png');
-        PIXI.Assets.add('person_trio2', '/assets/bit/person_trio2.png');
-        PIXI.Assets.add('revo1', '/assets/bit/revo1.png');
-        PIXI.Assets.add('revo2', '/assets/bit/revo2.png');
-        PIXI.Assets.add('spining1', '/assets/bit/spining1.png');
-        PIXI.Assets.add('spot1', '/assets/bit/spot1.png');
-        PIXI.Assets.add('spot2', '/assets/bit/spot2.png');
-        PIXI.Assets.add('description_bg', '/assets/bit/description_bg.png');
+        PIXI.Assets.add('game_in_progress', '/assets//game_in_progress.png');
+        PIXI.Assets.add('flip_card', '/assets//flip_card.png');
+        PIXI.Assets.add('description_bg', '/assets/description_bg.png');
+
+        PIXI.Assets.add('animal1', '/assets/card/animal1.png');
+        PIXI.Assets.add('animal2', '/assets/card/animal2.png');
+        PIXI.Assets.add('banana_slip1', '/assets/card/banana_slip1.png');
+        PIXI.Assets.add('burst1', '/assets/card/burst1.png');
+        PIXI.Assets.add('burst2', '/assets/card/burst2.png');
+        PIXI.Assets.add('burst3', '/assets/card/burst3.png');
+        PIXI.Assets.add('burst4', '/assets/card/burst4.png');
+        PIXI.Assets.add('burst5', '/assets/card/burst5.png');
+        PIXI.Assets.add('cardpick1', '/assets/card/cardpick1.png');
+        PIXI.Assets.add('cardpick2', '/assets/card/cardpick2.png');
+        PIXI.Assets.add('cardtake1', '/assets/card/cardtake1.png');
+        PIXI.Assets.add('change_deck1', '/assets/card/change_deck1.png');
+        PIXI.Assets.add('fallgirl1', '/assets/card/fallgirl1.png');
+        PIXI.Assets.add('fallgirl2', '/assets/card/fallgirl2.png');
+        PIXI.Assets.add('fallguy1', '/assets/card/fallguy1.png');
+        PIXI.Assets.add('fallguy2', '/assets/card/fallguy2.png');
+        PIXI.Assets.add('hand1', '/assets/card/hand1.png');
+        PIXI.Assets.add('hand2', '/assets/card/hand2.png');
+        PIXI.Assets.add('heart_and_spead1', '/assets/card/heart_and_spead1.png');
+        PIXI.Assets.add('in_hell1', '/assets/card/in_hell1.png');
+        PIXI.Assets.add('in_hell2', '/assets/card/in_hell2.png');
+        PIXI.Assets.add('in_hell3', '/assets/card/in_hell3.png');
+        PIXI.Assets.add('in_sky1', '/assets/card/in_sky1.png');
+        PIXI.Assets.add('in_sky2', '/assets/card/in_sky2.png');
+        PIXI.Assets.add('in_sky3', '/assets/card/in_sky3.png');
+        PIXI.Assets.add('introcard', '/assets/card/introcard.png');
+        PIXI.Assets.add('joker_dark1', '/assets/card/joker_dark1.png');
+        PIXI.Assets.add('joker_shine1', '/assets/card/joker_shine1.png');
+        PIXI.Assets.add('joker1', '/assets/card/joker1.png');
+        PIXI.Assets.add('joker2', '/assets/card/joker2.png');
+        PIXI.Assets.add('joker3', '/assets/card/joker3.png');
+        PIXI.Assets.add('joker4', '/assets/card/joker4.png');
+        PIXI.Assets.add('justice1', '/assets/card/justice1.png');
+        PIXI.Assets.add('justice2', '/assets/card/justice2.png');
+        PIXI.Assets.add('lock1', '/assets/card/lock1.png');
+        PIXI.Assets.add('lock2', '/assets/card/lock2.png');
+        PIXI.Assets.add('lock3', '/assets/card/lock3.png');
+        PIXI.Assets.add('nagative_card1', '/assets/card/nagative_card1.png');
+        PIXI.Assets.add('offercard1', '/assets/card/offercard1.png');
+        PIXI.Assets.add('offercard2', '/assets/card/offercard2.png');
+        PIXI.Assets.add('peace1', '/assets/card/peace1.png');
+        PIXI.Assets.add('person_duo1', '/assets/card/person_duo1.png');
+        PIXI.Assets.add('person_trio1', '/assets/card/person_trio1.png');
+        PIXI.Assets.add('person_trio2', '/assets/card/person_trio2.png');
+        PIXI.Assets.add('revo1', '/assets/card/revo1.png');
+        PIXI.Assets.add('revo2', '/assets/card/revo2.png');
+        PIXI.Assets.add('spining1', '/assets/card/spining1.png');
+        PIXI.Assets.add('spot1', '/assets/card/spot1.png');
+        PIXI.Assets.add('spot2', '/assets/card/spot2.png');
+        PIXI.Assets.add('worker1', '/assets/card/worker1.png');
+        PIXI.Assets.add('worker2', '/assets/card/worker2.png');
         PIXI.Assets.add('1tick1', '/assets/snd/1tick1.m4a');
         PIXI.Assets.add('1tick2', '/assets/snd/1tick2.m4a');
         PIXI.Assets.add('1tick3', '/assets/snd/1tick3.m4a');
         PIXI.Assets.add('1tick4', '/assets/snd/1tick4.m4a');
-        PIXI.Assets.add('heavy_echo1', '/assets/snd/heavy_echo1.mp3');
-        PIXI.Assets.add('heavy_hit1', '/assets/snd/heavy_hit1.mp3');
-        PIXI.Assets.add('heavy_hit2', '/assets/snd/heavy_hit2.mp3');
-        PIXI.Assets.add('insight1', '/assets/snd/insight1.mp3');
-        PIXI.Assets.add('insight2', '/assets/snd/insight2.mp3');
-        PIXI.Assets.add('mid_hit1', '/assets/snd/mid_hit1.mp3');
-        PIXI.Assets.add('rumbling1', '/assets/snd/rumbling1.mp3');
-        PIXI.Assets.add('runbling2', '/assets/snd/runbling2.mp3');
         PIXI.Assets.add('start_catch1', '/assets/snd/start_catch1.mp3');
-        PIXI.Assets.add('start_catch2', '/assets/snd/start_catch2.mp3');
         
         this._assetsLoad = [
-            'banana_slip1',
+            'game_in_progress',
+            'flip_card',
+            'description_bg',
+
             'animal1',
             'animal2',
+            'banana_slip1',
             'burst1',
             'burst2',
+            'burst3',
+            'burst4',
+            'burst5',
             'cardpick1',
             'cardpick2',
             'cardtake1',
+            'change_deck1',
+            'fallgirl1',
+            'fallgirl2',
             'fallguy1',
             'fallguy2',
             'hand1',
             'hand2',
+            'heart_and_spead1',
+            'in_hell1',
+            'in_hell2',
+            'in_hell3',
+            'in_sky1',
+            'in_sky2',
+            'in_sky3',
             'introcard',
+            'joker_dark1',
+            'joker_shine1',
             'joker1',
             'joker2',
             'joker3',
             'joker4',
+            'justice1',
+            'justice2',
             'lock1',
             'lock2',
+            'lock3',
+            'nagative_card1',
             'offercard1',
             'offercard2',
             'peace1',
@@ -111,21 +149,13 @@ export class AssetLoader extends PIXI.Container {
             'spining1',
             'spot1',
             'spot2',
-            'description_bg',
+            'worker1',
+            'worker2',
             '1tick1',
             '1tick2',
             '1tick3',
             '1tick4',
-            'heavy_echo1',
-            'heavy_hit1',
-            'heavy_hit2',
-            'insight1',
-            'insight2',
-            'mid_hit1',
-            'rumbling1',
-            'runbling2',
             'start_catch1',
-            'start_catch2',
         ];
 
         const onProgress = (e) => {

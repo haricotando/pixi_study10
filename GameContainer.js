@@ -45,8 +45,8 @@ export class GameContainer extends PIXI.Container {
     }
 
     diceNextInterval(){
-        const secRange = 1;
-        const minSec = 0;
+        const secRange = 3;
+        const minSec = 1;
         const randomSec = Math.round(Math.random() * secRange);
         const finalSec = (minSec + randomSec) * 1000;
         return finalSec;

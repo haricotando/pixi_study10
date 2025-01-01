@@ -14,7 +14,6 @@ export class IntroDeckAnimation extends PIXI.Container {
     init(){
         this.sortableChildren = true;
         this.initCardTable();
-        // this.initSpreadImageCache();
 
         const card0 = this.addChild(new Card(0));
         card0.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
@@ -41,10 +40,10 @@ export class IntroDeckAnimation extends PIXI.Container {
         const gridX = Math.round((dp.stageRect.width - margin) / 4);
 
         this.imageTable = this.addChild(new PIXI.Container());
-        const coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000}));
-        coverBox.alpha = 0;
+        this.coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000}));
+        this.coverBox.alpha = 0;
         gsap.timeline({delay:2.3})
-            .to(coverBox, {alpha:0.5, duration:0.5, ease:'none'})
+            .to(this.coverBox, {alpha:0.7, duration:0.5, ease:'none'})
 
         Utils.shuffleArray(dp.deck);
         const maxDisp = dp.deck.length > 20 ? 20 : dp.deck.length;
@@ -67,7 +66,7 @@ export class IntroDeckAnimation extends PIXI.Container {
     }
 
     initOptionScreen(){
-        const textDescripton = this.addChild(new PIXI.Text("オプション選択が入る予定", {
+        this.textDescripton = this.addChild(new PIXI.Text("オプション選択が入る予定", {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 50, fill: 0xFEFEFE,
@@ -76,23 +75,23 @@ export class IntroDeckAnimation extends PIXI.Container {
             wordWrap: true,
             wordWrapWidth: 800,
         }));
-        textDescripton.anchor.set(0.5, 0);
-        textDescripton.x = dp.stageRect.halfWidth;
-        textDescripton.y = 500;
-        this.initButton();
-    }
+        this.textDescripton.anchor.set(0.5, 0);
+        this.textDescripton.x = dp.stageRect.halfWidth;
+        this.textDescripton.y = 500;
 
-    initButton(){
         const btnFlipCard = this.addChild(new CommonButton('ゲームを開始'));
         btnFlipCard.x = dp.stageRect.halfWidth;
-        btnFlipCard.y = dp.stageRect.height - 200;
+        btnFlipCard.y = dp.stageRect.height - (dp.stageRect.height / 10);
         
         btnFlipCard.cursor    = 'pointer';
         btnFlipCard.eventMode = 'static';
         const onTap = (e) => {
+            PIXI.sound.play('1tick3');
             btnFlipCard.eventMode = 'none';
-
-            gsap.timeline({delay:0})
+            btnFlipCard.activate();
+            gsap.timeline()
+            .to(this.coverBox, {alpha:1, duration:0.4, ease:'none'})
+            .to(this.textDescripton, {alpha:0, duration:0.4, ease:'none'}, '<')
             .call(()=>{
                 this.parent.standby();
                 this.parent.removeChild((this));

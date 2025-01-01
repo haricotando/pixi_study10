@@ -33,12 +33,12 @@ export class CommonButton extends PIXI.Container {
         this.labelText.anchor.set(0.5, 0.5);
     }
 
-    // activate(){
-    //     gsap.timeline()
-    //     .to(this.background, {alpha:0.8, duration:0.2, ease:'expo.out'}, '<')
-    //     .to(this.backgroundRim.scale, {x:1.1, y:1.2, duration:0.2, ease:'expo.out'}, '<')
-    //     .to(this.background.scale, {x:1.1, y:1.2, duration:0.2, ease:'expo.out'}, '<')
-    //     .to(this.labelText.scale, {x:0.7, y:0.7, duration:0.3, ease:'back.out(2)'}, '<')
-    //     .to(this, {alpha:0, duration:0.2, ease:'none'}, '<')
-    // }
+    activate(){
+        gsap.timeline()
+        .to(this.background, {alpha:0.8, duration:0.2, ease:'expo.out'}, '<')
+        .to(this.backgroundRim.scale, {x:1.1, y:1.2, duration:0.2, ease:'expo.out'}, '<')
+        .to(this.background.scale, {x:1.1, y:1.2, duration:0.2, ease:'expo.out'}, '<')
+        .to(this.labelText.scale, {x:0.7, y:0.7, duration:0.3, ease:'back.out(2)'}, '<')
+        .to(this, {alpha:0, duration:0.2, ease:'none'}, '<')
+    }
 }

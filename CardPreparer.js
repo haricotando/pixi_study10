@@ -13,27 +13,50 @@ export class CardPreparer extends PIXI.Container {
 
         const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
         this.textAndButton = this.addChild(new PIXI.Container());
-        const textSample = this.textAndButton.addChild(new PIXI.Text("..", {
-            fontFamily: 'Inter', 
-            fontWeight: 400,
-            fontSize: 65, fill: 0xFEFEFE,
-            letterSpacing: 15,
-        }));
-        textSample.anchor.set(0.5, 0);
-        textSample.x = dp.stageRect.halfWidth;
-        textSample.y = 100;
+
+        
+        const hourglass = PIXI.Sprite.from(dataProvider.assets.game_in_progress);
+        hourglass.anchor.set(0.5);
+        Utils.layoutCenter(hourglass, dp.stageRect);
+        hourglass.scale.set(0.8);
+        
+        const progressBar = this.addChild(GraphicsHelper.exDrawRect(0, 0, hourglass.width, 20, false, {color:0xFFFF00}));
+        progressBar.x = dp.stageRect.halfWidth - hourglass.width / 2;
+        progressBar.y = hourglass.y + hourglass.height /2;
+
+        hourglass.scale.set(0.1);
+        this.addChild(hourglass);
+        gsap.timeline()
+            .to(hourglass.scale, {x:0.8, y:0.8, duration:0.3, ease:'expo.out'})
+            .to(hourglass.scale, {x:0.1, y:0.1, duration:0.3, ease:'expo.in', delay: delay / 1000 - 0.5})
+            .call(()=>{
+                hourglass.visible = false;
+            });
+
+        gsap.timeline()
+            .to(progressBar, {width:1, duration: delay / 1000, ease:'none'})
+            .call(()=>{
+                progressBar.visible = false;
+            });
 
         gsap.delayedCall(delay / 1000, ()=>{
-            // this.initTextAndButton();
             this.onExecuteFX();
         });
 
 
-        this.initDebugger(delay);
+        // this.initDebugger(delay);
     }
 
     initTextAndButton(){
-        const textSample2 = this.textAndButton.addChild(new PIXI.Text("...", {
+        const flipcard = PIXI.Sprite.from(dataProvider.assets.flip_card);
+        flipcard.anchor.set(0.5);
+        Utils.layoutCenter(flipcard, dp.stageRect);
+        flipcard.scale.set(0.1);
+        this.addChild(flipcard);
+        gsap.timeline()
+            .to(flipcard.scale, {x:0.8, y:0.8, duration:0.3, ease:'expo.out'})
+
+        const message = this.addChild(new PIXI.Text("...", {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 80, fill: 0xFEFEFE,
@@ -42,24 +65,35 @@ export class CardPreparer extends PIXI.Container {
             wordWrap: true,
             wordWrapWidth: 800,
         }));
-        textSample2.anchor.set(0.5, 0);
-        textSample2.x = dp.stageRect.halfWidth;
-        textSample2.y = 500;
+        message.anchor.set(0.5, 0);
+        message.x = dp.stageRect.halfWidth;
+        message.y = 100;
+
+
 
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
         if(nextCardInfo.effectTrigger == 'immediate'){
-            textSample2.text = '現在のプレイヤーは\n手を止めて\nカードをめくる';
+            message.text = '手番のプレイヤーは\n手を止めて\nカードをめくる';
         }else{
-            textSample2.text = '現在のプレイヤーは\n手番終了後に\nカードをめくる';
+            message.text = '手番のプレイヤーは\nアクション終了後\nカードをめくる';
         }
 
         const btnFlipCard = this.textAndButton.addChild(new CommonButton('カードをめくる'));
         btnFlipCard.x = dp.stageRect.halfWidth;
-        btnFlipCard.y = dp.stageRect.height - 200;
+        btnFlipCard.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        btnFlipCard.alpha = 0;
+
+        gsap.timeline({delay: 0.5})
+        .to(btnFlipCard, {alpha:1, duration: 0.3, ease:'none'})
+        .call(()=>{
+            btnFlipCard.cursor    = 'pointer';
+            btnFlipCard.eventMode = 'static';
+        });
         
-        btnFlipCard.cursor    = 'pointer';
-        btnFlipCard.eventMode = 'static';
         const onTap = (e) => {
+            gsap.timeline()
+                .to(flipcard.scale, {x:0.3, y:0.3, duration:0.3, ease:'none'})
+                .to(message, {alpha:0, duration:0.3, ease:'none'}, '<')
             btnFlipCard.eventMode = 'none';
             this.flipCard();
             this.textAndButton.visible = false;
@@ -78,7 +112,7 @@ export class CardPreparer extends PIXI.Container {
 
     flipCard(){
         const card0 = this.addChild(new Card(this.cardId));
-        card0.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
+        card0.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight - 120);
         card0.scale.set(1);
         card0.alpha = 0;
         gsap.timeline({delay:0.1})
@@ -87,11 +121,17 @@ export class CardPreparer extends PIXI.Container {
 
         const startButton = this.addChild(new CommonButton('続ける'));
         startButton.x = dp.stageRect.halfWidth;
-        startButton.y = dp.stageRect.height - 200;
+        startButton.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        startButton.alpha = 0;
+        gsap.timeline({delay:0.5})
+        .to(startButton, {alpha:1, duration:0.4, ease:'none'})
+        .call(()=>{
+            startButton.cursor    = 'pointer';
+            startButton.eventMode = 'static';
+        });
         
-        startButton.cursor    = 'pointer';
-        startButton.eventMode = 'static';
         const onTap = (e) => {
+            PIXI.sound.play('1tick2');
             startButton.eventMode = 'none';
             this.parent.standby();
             this.parent.removeChild(this);
@@ -120,21 +160,24 @@ export class CardPreparer extends PIXI.Container {
         fxCircle5.scale.set(4);
         fxCircle5.visible = false;
         gsap.timeline()
-            .to(fxCircle.scale, {x:5, y:5, duration: 0.5, ease:'expo.out'})
+            .to(fxCircle.scale, {x:6, y:6, duration: 0.5, ease:'expo.out'})
             .to(fxCircle2.scale, {x:0.01, y:0.01, duration: 0.4, ease:'expo.out', onComplete: () => {fxCircle2.visible = false;}}, '<')
             .to(fxfx.scale, {x:1.5, y:1.5, duration:0.4, ease:'expo.in'}, '<')
             .set(fxCircle3, {visible: true}, '<0.2')
-            .to(fxCircle3.scale, {x:5, y:5, duration: 0.5, ease:'expo.out'}, '<')
+            .to(fxCircle3.scale, {x:6, y:6, duration: 0.5, ease:'expo.out'}, '<')
             
             
             .set(fxCircle5, {visible: true}, '<0.1')
-            .to(fxCircle5.scale, {x:5, y:5, duration: 0.7, ease:'expo.out'}, '<')
-            .to(fxCircle5.scale, {x:20, y:20, duration: 0.3, ease:'expo.in'})
+            .to(fxCircle5.scale, {x:6, y:6, duration: 0.7, ease:'expo.out'}, '<')
+            .to(fxCircle5.scale, {x:22, y:22, duration: 0.3, ease:'expo.in'})
             .call(()=>{
                 fxfx.visible = false;
                 this.initTextAndButton();
             })
             .to(fxCircle5, {alpha:0, duration: 0.4, ease:'none'})
+            .call(()=>{
+                fxContainer.visible = false;
+            })
             
             .to(fxfx, {rotation:Utils.degreesToRadians(180), duration:0.4, ease:'expo.in'}, '<-0.4')
         fxContainer.x = dp.stageRect.halfWidth;
@@ -191,7 +234,6 @@ export class CardPreparer extends PIXI.Container {
 
     initDebugger(delay){
         const progressBar = this.addChild(GraphicsHelper.exDrawRect(0, 0, 400, 20, false, {color:0xFFFF00}));
-        Utils.pivotCenter(progressBar);
         progressBar.x = dp.stageRect.halfWidth;
         progressBar.y = dp.stageRect.halfWidth;
         gsap.timeline()
@@ -199,6 +241,5 @@ export class CardPreparer extends PIXI.Container {
             .call(()=>{
                 progressBar.visible = false;
             });
-
     }
 }
