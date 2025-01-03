@@ -1,8 +1,7 @@
-import Utils from "/class/util/Utils.js";
-import { dataProvider, dp } from "/dataProvider.js";
-import { ApplicationRoot } from "/ApplicationRoot.js";
-import { viewQRcode } from "/viewQRcode.js";
-import { ApplicationRootNoSleep } from "/ApplicationRootNoSleep.js";
+import Utils from "./class/util/Utils.js";
+import { dataProvider, dp } from "./dataProvider.js";
+import { ApplicationRoot } from "./ApplicationRoot.js";
+import { viewQRcode } from "./viewQRcode.js";
 
 console.log(PIXI.VERSION)
 /* ------------------------------------------------------------
