@@ -2,6 +2,7 @@ import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
 import { CommonButton } from "./CommonButton.js";
 import Utils from "./class/util/Utils.js";
+import { CardView } from "./CardView.js";
 
 export class Instruction extends PIXI.Container {
     
@@ -35,6 +36,14 @@ export class Instruction extends PIXI.Container {
         textDescripton.anchor.set(0.5, 0);
         textDescripton.x = dp.stageRect.halfWidth;
         textDescripton.y = 500;
+
+        textTitle.cursor = 'pointer';
+        textTitle.eventMode = 'static';
+        const onTap = (e) => {
+        this.addChild(new CardView());
+        };
+        textTitle.on('pointertap', onTap);
+
 
         this.initButton();
     }
