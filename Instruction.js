@@ -22,7 +22,7 @@ export class Instruction extends PIXI.Container {
         textTitle.x = dp.stageRect.halfWidth;
         textTitle.y = 100;
 
-        const textDescripton = this.addChild(new PIXI.Text("そのうちここに\n使い方を入れる", {
+        const textDescripton = this.addChild(new PIXI.Text("（詳細は後から書く）\n1. 物理トランプを用意する\n2. カードを配る\n3. ローカルルールを確認\n4. 「進む」を押す", {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 50, fill: 0xFEFEFE,
@@ -30,6 +30,7 @@ export class Instruction extends PIXI.Container {
             breakWords: true,
             wordWrap: true,
             wordWrapWidth: 800,
+            lineHeight: 80,
         }));
         textDescripton.anchor.set(0.5, 0);
         textDescripton.x = dp.stageRect.halfWidth;

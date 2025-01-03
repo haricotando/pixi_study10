@@ -18,15 +18,17 @@ export const dataProvider = {
     assets: {},
 
     game: {
-        currentIndex: 0,
-        nextInterval: 0,
+        currentIndex  : 0,
+        nextInterval  : 0,
+        minInterval   : 0,
+        randomInterval: 0,
     },
 
     cardList : [],
-    deckXXX: [],
-    deck: [],
+    deck     : [],
+    introDeck: [],
 
-    textStyle: {},
+    textStyle   : {},
     colorPalette: {},
 };
 

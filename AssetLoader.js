@@ -251,6 +251,7 @@ export class AssetLoader extends PIXI.Container {
 
     initDeck(){
         for(let i = 0; i<dp.assets.csv.length; i++){
+            dp.introDeck.push(dp.assets.csv[i].id);
             for(let ii = 0; ii<dp.assets.csv[i].quantity; ii++){
                 dp.deck.push(dp.assets.csv[i].id);
             }
