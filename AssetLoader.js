@@ -36,6 +36,7 @@ export class AssetLoader extends PIXI.Container {
     addAssets(){
         PIXI.Assets.add('game_in_progress', './assets/game_in_progress.png');
         PIXI.Assets.add('flip_card', './assets/flip_card.png');
+        PIXI.Assets.add('standby', './assets/standby.png');
         PIXI.Assets.add('description_bg', './assets/description_bg.png');
 
         PIXI.Assets.add('animal1', './assets/card/animal1.png');
@@ -63,7 +64,6 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('in_sky1', './assets/card/in_sky1.png');
         PIXI.Assets.add('in_sky2', './assets/card/in_sky2.png');
         PIXI.Assets.add('in_sky3', './assets/card/in_sky3.png');
-        PIXI.Assets.add('introcard', './assets/card/introcard.png');
         PIXI.Assets.add('joker_dark1', './assets/card/joker_dark1.png');
         PIXI.Assets.add('joker_shine1', './assets/card/joker_shine1.png');
         PIXI.Assets.add('joker1', './assets/card/joker1.png');
@@ -98,6 +98,7 @@ export class AssetLoader extends PIXI.Container {
         this._assetsLoad = [
             'game_in_progress',
             'flip_card',
+            'standby',
             'description_bg',
 
             'animal1',
@@ -125,7 +126,6 @@ export class AssetLoader extends PIXI.Container {
             'in_sky1',
             'in_sky2',
             'in_sky3',
-            'introcard',
             'joker_dark1',
             'joker_shine1',
             'joker1',

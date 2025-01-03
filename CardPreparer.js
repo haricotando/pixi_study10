@@ -13,7 +13,6 @@ export class CardPreparer extends PIXI.Container {
 
         const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
         this.textAndButton = this.addChild(new PIXI.Container());
-
         
         const hourglass = PIXI.Sprite.from(dataProvider.assets.game_in_progress);
         hourglass.anchor.set(0.5);
@@ -23,6 +22,20 @@ export class CardPreparer extends PIXI.Container {
         const progressBar = this.addChild(GraphicsHelper.exDrawRect(0, 0, hourglass.width, 20, false, {color:0xFFFF00}));
         progressBar.x = dp.stageRect.halfWidth - hourglass.width / 2;
         progressBar.y = hourglass.y + hourglass.height /2;
+
+
+        this.gameInProgressText = this.addChild(new PIXI.Text("ゲームが進行中...", {
+            fontFamily: 'Kaisei Decol', 
+            fontWeight: 700,
+            fontSize: 80, fill: 0xFEFEFE,
+            align: 'center',
+            breakWords: true,
+            wordWrap: true,
+            wordWrapWidth: 800,
+        }));
+        this.gameInProgressText.anchor.set(0.5, 0);
+        this.gameInProgressText.x = dp.stageRect.halfWidth;
+        this.gameInProgressText.y = hourglass.y - 550;
 
         hourglass.scale.set(0.1);
         this.addChild(hourglass);
@@ -35,20 +48,16 @@ export class CardPreparer extends PIXI.Container {
 
         gsap.timeline()
             .to(progressBar, {width:1, duration: delay / 1000, ease:'none'})
+            .to(this.gameInProgressText, {alpha:0, duration:0.3, ease:'none', delay: delay / 1000}, '<')
             .call(()=>{
                 progressBar.visible = false;
             });
-
-        // gsap.delayedCall(delay / 1000, ()=>{
-        //     this.onExecuteFX();
-        // });
-
-
-        // this.initDebugger(delay);
     }
 
     initTextAndButton(){
-        const flipcard = PIXI.Sprite.from(dataProvider.assets.flip_card);
+        const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
+
+        const flipcard = PIXI.Sprite.from(nextCardInfo.effectTrigger == 'immediate' ? dataProvider.assets.flip_card : dataProvider.assets.standby);
         flipcard.anchor.set(0.5);
         Utils.layoutCenter(flipcard, dp.stageRect);
         flipcard.scale.set(0.1);
@@ -71,7 +80,7 @@ export class CardPreparer extends PIXI.Container {
 
 
 
-        const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
+        
         if(nextCardInfo.effectTrigger == 'immediate'){
             message.text = '手番のプレイヤーは\n手を止めて\nカードをめくる';
         }else{
