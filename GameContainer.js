@@ -8,6 +8,8 @@ export class GameContainer extends PIXI.Container {
     
     constructor() {
         super();
+        this.sortableChildren = true;
+        Utils.shuffleArray(dp.deck);
         this.init();
         // this.standby();
     }
@@ -28,25 +30,73 @@ export class GameContainer extends PIXI.Container {
     
     standby(){
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
-        console.log(nextCardInfo.effectTrigger);
-        
-        
         const waitingDuration = this.diceNextInterval();
+
+        const nextCard = this.addChild(new CardPreparer(waitingDuration, dp.deck[dp.game.currentIndex]));
         
-        setTimeout(() => {
+        this.eventInterval = setTimeout(() => {
             if(nextCardInfo.effectTrigger == 'immediate'){
                 PIXI.sound.play('start_catch1');
             }else{
                 PIXI.sound.play('start_catch1');
             }
+            nextCard.onExecuteFX();
         }, waitingDuration);
-        this.addChild(new CardPreparer(waitingDuration, dp.deck[dp.game.currentIndex]));
         dp.game.currentIndex ++;
     }
 
+    initEndButton(){
+        this.endButton = this.addChild(new PIXI.Container());
+        this.endButton.zIndex = 10;
+        
+        this.background = GraphicsHelper.exDrawRoundedRect(0, 0, 250, 70, 15, false, {color:0xFFFFFF});
+        this.background.alpha = 0.2;
+        Utils.pivotCenter(this.background);
+        this.endButton.addChild(this.background);
+        this.backgroundRim = GraphicsHelper.exDrawRoundedRect(0, 0, 250, 70, 15, {color:0xFFFFFF, width:4}, false);
+        this.backgroundRim.alpha = 0.5;
+        Utils.pivotCenter(this.backgroundRim);
+        this.endButton.addChild(this.backgroundRim);
+
+        this.labelText = this.endButton.addChild(new PIXI.Text('ゲーム終了', {
+            fontFamily: 'Kaisei Decol', 
+            fontWeight: 700,
+            fontSize: 40, fill: 0xEFEFEF,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowAlpha: 0.9,
+            dropShadowBlur: 16,
+            dropShadowAngle: 0,
+            dropShadowDistance: 0,
+            
+        }));
+        this.labelText.anchor.set(0.5, 0.5);
+
+        this.endButton.position.set(
+            dp.stageRect.width - this.endButton.width / 2 - 20, 
+            this.endButton.height / 2 + 20
+        );
+
+        this.endButton.cursor    = 'pointer';
+        this.endButton.eventMode = 'static';
+        const onTap = (e) => {
+            console.log('endGame');
+            this.readyToDie();
+        };
+
+        this.endButton.on('pointertap', onTap);
+    }
+
+    readyToDie(){
+        clearTimeout(this.eventInterval);
+        this.parent.initGameContainer();
+        this.parent.removeChild(this);
+    }
+    
+
     diceNextInterval(){
-        const secRange = 3;
-        const minSec = 1;
+        const secRange = dp.game.randomInterval;
+        const minSec = dp.game.minInterval;
         const randomSec = Math.round(Math.random() * secRange);
         const finalSec = (minSec + randomSec) * 1000;
         return finalSec;

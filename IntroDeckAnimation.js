@@ -93,47 +93,47 @@ export class IntroDeckAnimation extends PIXI.Container {
         this.textDescripton.x = dp.stageRect.halfWidth;
         this.textDescripton.y = 50;
 
-        const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 5, 300, 30));
-        uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 60);
+        const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, 30));
+        uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 80);
         // uiSlider.x = 50;
         
         //　opt 追加イベントの設定
         uiSlider.on('customEvent', (data) => {
             
             this.minVal = Math.round(data.value);
-            this.minInterval.text = `最小インターバル: ${this.minVal}`;
+            this.minInterval.text = `最小インターバル: ${this.minVal}秒`;
         });
 
         this.minVal = 30;
-        this.minInterval = this.addChild(new PIXI.Text(`最小インターバル: ${this.minVal}`, {
+        this.minInterval = this.addChild(new PIXI.Text(`最小インターバル: ${this.minVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 30, fill: 0xFEFEFE,
         }));
         this.minInterval.anchor.set(0.5, 0.5);
         this.minInterval.x = dp.stageRect.halfWidth;
-        this.minInterval.y = uiSlider.y + 100;
+        this.minInterval.y = uiSlider.y - 20;
 
 
 
 
-        const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 5, 300, 30));
-        randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 150);
+        const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, 30));
+        randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 170);
 
         randomSlider.on('customEvent', (data) => {
             
             this.randomVal = Math.round(data.value);
-            this.randomInterval.text = `最小インターバル: ${this.randomVal}`;
+            this.randomInterval.text = `最小インターバル: ${this.randomVal}秒`;
         });
         this.randomVal = 30;
-        this.randomInterval = this.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.minVal}`, {
+        this.randomInterval = this.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.minVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 30, fill: 0xFEFEFE,
         }));
         this.randomInterval.anchor.set(0.5, 0.5);
         this.randomInterval.x = dp.stageRect.halfWidth;
-        this.randomInterval.y = randomSlider.y + 100;
+        this.randomInterval.y = randomSlider.y - 20;
         
 
         const btnFlipCard = this.addChild(new CommonButton('ゲームを開始'));

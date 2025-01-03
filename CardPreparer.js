@@ -39,9 +39,9 @@ export class CardPreparer extends PIXI.Container {
                 progressBar.visible = false;
             });
 
-        gsap.delayedCall(delay / 1000, ()=>{
-            this.onExecuteFX();
-        });
+        // gsap.delayedCall(delay / 1000, ()=>{
+        //     this.onExecuteFX();
+        // });
 
 
         // this.initDebugger(delay);
