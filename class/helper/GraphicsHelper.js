@@ -1,21 +1,28 @@
 class GraphicsHelper {
 
-    /* ------------------------------------------------------------
-        drawRect + line, fill
-    ------------------------------------------------------------ */
+    /**
+     * PIXI.Grahpics.drawRectのラッパー
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} width 
+     * @param {number} height 
+     * @param {object} line - {color:val, width: val, alpha: val, alignment: 0.5 = middle, 1 = outer, 0 = inner}
+     * @param {object} fill - {color:val, alpha: val}
+     * @returns PIXI.Graphics
+     */
     static exDrawRect(x, y, width, height, line, fill) {
         const graphics = new PIXI.Graphics();
         if(line){
             let lineWidth = line.width ? line.width : 1;
             let lineColor = line.color != undefined ? line.color : 0xFFFFFF;
             let lineAlpha = line.alpha != undefined ? line.alpha : 1;
-            graphics.lineStyle(lineWidth, lineColor, lineAlpha, 0);
+            let lineAlignment = line.alignment != undefined ? line.alignment : 0.5;
+            graphics.lineStyle(lineWidth, lineColor, lineAlpha, lineAlignment);
             /*
             2024/10/08 4つ目のパラメータ　alignment追加
             The alignment of any lines drawn (0.5 = middle, 1 = outer, 0 = inner). WebGL only.
-            Default Value:
-            0.5
-*/
+            Default Value: 0.5
+            */
         }
 
         if(fill){
@@ -30,16 +37,25 @@ class GraphicsHelper {
         return graphics;
     }
 
-    /* ------------------------------------------------------------
-        drawRoundedRect + line, fill
-    ------------------------------------------------------------ */
+    /**
+     * PIXI.Grahpics.drawRoundedRectのラッパー
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} width 
+     * @param {number} height
+     * @param {number} radius
+     * @param {object} line - {color:val, width: val, alpha: val, alignment: 0.5 = middle, 1 = outer, 0 = inner}
+     * @param {object} fill - {color:val, alpha: val}
+     * @returns PIXI.Graphics
+     */
     static exDrawRoundedRect(x, y, width, height, radius, line, fill) {
         const graphics = new PIXI.Graphics();
         if(line){
             let lineWidth = line.width ? line.width : 1;
             let lineColor = line.color != undefined ? line.color : 0xFFFFFF;
             let lineAlpha = line.alpha != undefined ? line.alpha : 1;
-            graphics.lineStyle(lineWidth, lineColor, lineAlpha);
+            let lineAlignment = line.alignment != undefined ? line.alignment : 0.5;
+            graphics.lineStyle(lineWidth, lineColor, lineAlpha, lineAlignment);
         }
 
         if(fill){
@@ -54,9 +70,15 @@ class GraphicsHelper {
         return graphics;
     }
 
-    /* ------------------------------------------------------------
-        drawCircle + line, fill
-    ------------------------------------------------------------ */
+    /**
+     * PIXI.Grahpics.drawCircleのラッパー
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} radius 
+     * @param {object} line - {color:val, width: val, alpha: val, alignment: 0.5 = middle, 1 = outer, 0 = inner}
+     * @param {object} fill - {color:val, alpha: val}
+     * @returns PIXI.Graphics
+     */
     static exDrawCircle(x, y, radius, line, fill){
         const graphics = new PIXI.Graphics();
         
@@ -64,7 +86,8 @@ class GraphicsHelper {
             let lineWidth = line.width ? line.width : 1;
             let lineColor = line.color != undefined ? line.color : 0xFFFFFF;
             let lineAlpha = line.alpha != undefined ? line.alpha : 1;
-            graphics.lineStyle(lineWidth, lineColor, lineAlpha);
+            let lineAlignment = line.alignment != undefined ? line.alignment : 0.5;
+            graphics.lineStyle(lineWidth, lineColor, lineAlpha, lineAlignment);
         }
         
         if(fill){
@@ -81,16 +104,24 @@ class GraphicsHelper {
         return graphics;
     }
     
-    /* ------------------------------------------------------------
-    drawEllipse + line, fill
-    ------------------------------------------------------------ */
+    /**
+     * PIXI.Grahpics.drawEllipseのラッパー
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} width 
+     * @param {number} height 
+     * @param {object} line - {color:val, width: val, alpha: val, alignment: 0.5 = middle, 1 = outer, 0 = inner}
+     * @param {object} fill - {color:val, alpha: val}
+     * @returns PIXI.Graphics
+     */
     static exDrawEllipse(x, y, width, height, line, fill){
         const graphics = new PIXI.Graphics();
         if(line){
             let lineWidth = line.width ? line.width : 1;
             let lineColor = line.color != undefined ? line.color : 0xFFFFFF;
             let lineAlpha = line.alpha != undefined ? line.alpha : 1;
-            graphics.lineStyle(lineWidth, lineColor, lineAlpha);
+            let lineAlignment = line.alignment != undefined ? line.alignment : 0.5;
+            graphics.lineStyle(lineWidth, lineColor, lineAlpha, lineAlignment);
         }
         
         if(fill){

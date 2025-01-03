@@ -35,7 +35,7 @@ export class GameContainer extends PIXI.Container {
         const nextCard = this.addChild(new CardPreparer(waitingDuration, dp.deck[dp.game.currentIndex]));
         
         this.eventInterval = setTimeout(() => {
-            if(nextCardInfo.effectTrigger == 'immediate'){
+            if(nextCardInfo.event_trigger == 'onImmediateIntervention'){
                 PIXI.sound.play('start_catch1');
             }else{
                 PIXI.sound.play('start_catch1');

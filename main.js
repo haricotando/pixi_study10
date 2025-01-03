@@ -55,6 +55,7 @@ function init(){
         element.style.height = '100vh';
     }
 
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     let app = new PIXI.Application(appConfig);
     app.view.id = 'pixi';
     document.body.appendChild(app.view);

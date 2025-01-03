@@ -9,13 +9,12 @@ export class Card extends PIXI.Container {
         id = id.toString();
         const myData = Utils.findObjectByKey(dp.assets.csv, 'id', id);
 
-        const rimMargin = 30;
+        const rimMargin = 50;
 
         /**
          * container
          */
         const cardContainer = this.addChild(new PIXI.Container());
-        // const cardBG = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width, dp.stageRect.height, 50, false, {color: 0xEEE0D3}));
         const cardBG = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width, 1668, 50, false, {color: 0xEEE0D3}));
         
         Utils.pivotCenter(cardContainer);
@@ -23,7 +22,6 @@ export class Card extends PIXI.Container {
         /**
          * image mask
         */
-    //    const imageMask = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, dp.stageRect.height - rimMargin * 2, 30, false, {color: 0xFF0000, alpha:0.5}));
        const imageMask = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, false, {color: 0xFF0000, alpha:0.5}));
         imageMask.position.set(rimMargin, rimMargin);
 
@@ -50,8 +48,11 @@ export class Card extends PIXI.Container {
          * inner frame
          */        
         // const innerFrame = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, dp.stageRect.height - rimMargin * 2, 30, {color: 0x333333, width:20}, false));
-        const innerFrame = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, {color: 0x333333, width:20}, false));
+        const innerFrame = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, {color: 0x333333, width:20, alignment:1}, false));
         innerFrame.position.set(rimMargin, rimMargin);
+
+        const innerFrame2 = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, {color: 0xEFEFEF, width:10, alignment:1}, false));
+        innerFrame2.position.set(rimMargin, rimMargin);
 
 
 
@@ -96,78 +97,30 @@ export class Card extends PIXI.Container {
             dropShadowDistance: 0,
         }));
         textDescription.anchor.set(0.5, 0.5);
-        textDescription.text = myData.description;
+        textDescription.text = this.replacePlaceholdersWithErrors(myData.description);
         textDescription.position.set(dp.stageRect.halfWidth, descriptionBG.y + descriptionBG.height / 2);
-
-
-
-        // gsap.to(cardContainer.scale, {x:0.9, y:0.9, duration:3, ease:'sine.inOut'})
-
     }
 
-    init(){
-        const myData = Utils.findObjectByKey(dp.assets.csv, 'id', id);
-
-        /**
-         * 画像セット
-         */
-        const cardImage = PIXI.Sprite.from(dataProvider.assets[myData.asset_id]);
-        const cardRect = {width: cardImage.width, height: cardImage.height};
-        // this.addChild(cardImage);
-        
-        /**
-         * テキストラベル
-         */
-
-        const textContainer = this.addChild(new PIXI.Container());
-        const textName = this.addChild(new PIXI.Text("", {
-            fontFamily: 'Kaisei Decol', 
-            fontWeight: 700,
-            fontSize: 290, fill: 0xEFEFEF,
-            breakWords: true,
-            wordWrap: true,
-            wordWrapWidth: cardImage.width - 30,
-            dropShadow: true,
-            dropShadowColor: '#000000',
-            dropShadowAlpha: 0.5,
-            dropShadowBlur: 16,
-            dropShadowAngle: 0,
-            dropShadowDistance: 0,
-            
-        }));
-        textName.anchor.set(0.5, 0);
-        textName.text = myData.name;
-        textName.x = cardRect.width * 0.5;
-        textName.y = 100;
-        // textName.scale.set(10)
-        
-        const textDescription = this.addChild(new PIXI.Text("", {
-            fontFamily: 'Kaisei Decol', 
-            fontWeight: 300,
-            fontSize: 60, fill: 0xEFEFEF,
-            align: 'center',
-            breakWords: true,
-            wordWrap: true,
-            wordWrapWidth: cardImage.width - 100,
-            // lineHeight: 30,
-            
-            dropShadow: true,
-            dropShadowColor: '#000000',
-            dropShadowAlpha: 0.5,
-            dropShadowBlur: 8,
-            dropShadowAngle: 0,
-            dropShadowDistance: 0,
-        }));
-        textDescription.anchor.set(0.5, 0);
-        textDescription.text = myData.description;
-        textDescription.x = cardRect.width * 0.5;
-        textDescription.y = cardImage.height - (textDescription.height + 200);
-        // textDescription.y =textName.y + textName.height + 20;
-
-
-        this.pivot.set(cardRect.width * 0.5, cardRect.height * 0.5);
-
-        // gsap.to(this.scale, {x:0.8, y:0.8, duration:3, ease:'sine.inOut'})
-
+    replacePlaceholdersWithErrors(text) {
+        const cardMap = {
+            1: 'A',
+            11: 'J',
+            12: 'Q',
+            13: 'K'
+        };
+    
+        const replacedText = text.replace(/<number>/g, () => {
+            const number = Math.floor(Math.random() * 13) + 1;
+    
+            if (cardMap[number]) {
+                return cardMap[number];
+            } else if (number >= 2 && number <= 10) {
+                return number.toString();
+            } else {
+                return '{number}'; // 置き換えせずに残す
+            }
+        });
+    
+        return replacedText;
     }
 }

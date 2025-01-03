@@ -57,7 +57,7 @@ export class CardPreparer extends PIXI.Container {
     initTextAndButton(){
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
 
-        const flipcard = PIXI.Sprite.from(nextCardInfo.effectTrigger == 'immediate' ? dataProvider.assets.flip_card : dataProvider.assets.standby);
+        const flipcard = PIXI.Sprite.from(nextCardInfo.event_trigger == 'onImmediateIntervention' ? dataProvider.assets.flip_card : dataProvider.assets.standby);
         flipcard.anchor.set(0.5);
         Utils.layoutCenter(flipcard, dp.stageRect);
         flipcard.scale.set(0.1);
@@ -81,7 +81,7 @@ export class CardPreparer extends PIXI.Container {
 
 
         
-        if(nextCardInfo.effectTrigger == 'immediate'){
+        if(nextCardInfo.event_trigger == 'onImmediateIntervention'){
             message.text = '手番のプレイヤーは\n手を止めて\nカードをめくる';
         }else{
             message.text = '手番のプレイヤーは\nアクション終了後\nカードをめくる';
