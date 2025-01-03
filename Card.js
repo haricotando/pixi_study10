@@ -60,6 +60,7 @@ export class Card extends PIXI.Container {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 200, fill: 0xEFEFEF,
+            align: 'center',
             breakWords: true,
             wordWrap: true,
             wordWrapWidth: cardImage.width - 30,
