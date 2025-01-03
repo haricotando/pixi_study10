@@ -1,8 +1,8 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
 import Utils from "./class/util/Utils.js";
-import { IntroDeckAnimation } from "/IntroDeckAnimation.js";
-import { CardPreparer } from "/CardPreparer.js";
+import { IntroDeckAnimation } from "./IntroDeckAnimation.js";
+import { CardPreparer } from "./CardPreparer.js";
 
 export class GameContainer extends PIXI.Container {
     

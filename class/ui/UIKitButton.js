@@ -1,4 +1,4 @@
-import Utils from '/class/util/Utils.js';
+import Utils from '../util/Utils.js';
 
 export class UIKitButton extends PIXI.Container {
     /**
