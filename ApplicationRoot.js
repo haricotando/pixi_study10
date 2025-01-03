@@ -1,7 +1,7 @@
-import { dataProvider, dp } from "/dataProvider.js";
-import { AssetLoader } from "/AssetLoader.js";
-import { Instruction } from "/Instruction.js";
-import { GameContainer } from "/GameContainer.js";
+import { dataProvider, dp } from "./dataProvider.js";
+import { AssetLoader } from "./AssetLoader.js";
+import { Instruction } from "./Instruction.js";
+import { GameContainer } from "./GameContainer.js";
 
 export class ApplicationRoot extends PIXI.Container {
     

@@ -1,6 +1,6 @@
-import { dataProvider, dp } from "/dataProvider.js";
-import { UIKitSlider } from "/class/ui/UIKitSlider.js";
-import { UIKitToggleButton } from "/class/ui/UIKitToggleButton.js";
+import { dataProvider, dp } from "../../dataProvider.js";
+import { UIKitSlider } from "../ui/UIKitSlider.js";
+import { UIKitToggleButton } from "../ui/UIKitToggleButton.js";
 
 class Utils {
     /** ------------------------------------------------------------
