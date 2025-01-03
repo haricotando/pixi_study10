@@ -7,7 +7,7 @@ console.log(PIXI.VERSION)
 /* ------------------------------------------------------------
     変数定義
 ------------------------------------------------------------ */
-const allowMobileOnly = false;
+const allowMobileOnly = Utils.isOnGithub();
 const backgroundColor = 0x1A1F22;
 const basePCView = {width: 980, height: 1668};
 
@@ -35,10 +35,6 @@ WebFont.load({
 });
 
 function init(){
-
-    console.log(Utils.isOnGithub());
-    
-    
     let appConfig = {background: backgroundColor};
     
     // Setup
