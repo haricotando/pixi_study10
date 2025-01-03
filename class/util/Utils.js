@@ -321,6 +321,15 @@ class Utils {
         return array.find(obj => obj[key] === value);
     }
 
+   /** ============================================================
+     * ネットワーク
+     */
+
+    static isOnGithub() {
+        const hostname = window.location.hostname;
+        return hostname === 'github.com' || hostname.endsWith('.github.com');
+    }
+
     /** ============================================================
      * Snippets
      */

@@ -36,6 +36,8 @@ WebFont.load({
 
 function init(){
 
+    console.log(Utils.isOnGithub());
+    
     
     let appConfig = {background: backgroundColor};
     
