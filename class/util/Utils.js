@@ -327,7 +327,7 @@ class Utils {
 
     static isOnGithub() {
         const hostname = window.location.hostname;
-        return hostname === 'github.com' || hostname.endsWith('.github.com');
+        return hostname === 'github.com' || hostname.endsWith('.github.io');
     }
 
     /** ============================================================
