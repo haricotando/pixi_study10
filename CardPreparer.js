@@ -1,7 +1,7 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./class/helper/GraphicsHelper.js";
-import { Card } from "/Card.js";
-import Utils from "/class/util/Utils.js";
+import { Card } from "./Card.js";
+import Utils from "./class/util/Utils.js";
 import { CommonButton } from "./CommonButton.js";
 
 export class CardPreparer extends PIXI.Container {
