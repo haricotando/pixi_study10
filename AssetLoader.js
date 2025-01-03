@@ -266,7 +266,7 @@ export class AssetLoader extends PIXI.Container {
                 description: "混沌の本質\nそれは公平だ", 
                 // description: "人間の最高の力は\n計画が崩れたときに何をするかだ", 
                 quantity: 0,
-                imageID: "joker4"}
+                asset_id: "joker4"}
         );
 
         this.emit("onComplete", { 

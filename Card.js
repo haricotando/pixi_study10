@@ -30,7 +30,7 @@ export class Card extends PIXI.Container {
         /**
          * image
          */
-        const cardImage = PIXI.Sprite.from(dataProvider.assets[myData.imageID]);
+        const cardImage = PIXI.Sprite.from(dataProvider.assets[myData.asset_id]);
         cardContainer.addChild(cardImage);
         cardImage.position.set(rimMargin, rimMargin);
         Utils.resizeImage(cardImage, imageMask, 'contain');
@@ -111,7 +111,7 @@ export class Card extends PIXI.Container {
         /**
          * 画像セット
          */
-        const cardImage = PIXI.Sprite.from(dataProvider.assets[myData.imageID]);
+        const cardImage = PIXI.Sprite.from(dataProvider.assets[myData.asset_id]);
         const cardRect = {width: cardImage.width, height: cardImage.height};
         // this.addChild(cardImage);
         
