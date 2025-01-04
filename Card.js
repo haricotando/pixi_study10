@@ -7,6 +7,42 @@ export class Card extends PIXI.Container {
     constructor(id) {
         super();
         id = id.toString();
+        if(id == 'card_back'){
+            this.initCardBack();
+        }else{
+            this.initCardFace(id);
+        }
+
+    }
+
+    initCardBack(){
+        const rimMargin = 50;
+        const cardContainer = this.addChild(new PIXI.Container());
+        const cardBG = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width, 1668, 50, false, {color: 0xEEE0D3}));
+        Utils.pivotCenter(cardContainer);
+        
+       const imageMask = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, false, {color: 0xFF0000, alpha:0.5}));
+        imageMask.position.set(rimMargin, rimMargin);
+
+        const cardImage = PIXI.Sprite.from(dataProvider.assets.card_back);
+        cardContainer.addChild(cardImage);
+        cardImage.position.set(rimMargin, rimMargin);
+        Utils.resizeImage(cardImage, imageMask, 'fit');
+        cardImage.mask = imageMask;
+
+        /**
+         * inner frame
+         */        
+        const innerFrame = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, {color: 0x333333, width:20, alignment:0}, false));
+        innerFrame.position.set(rimMargin, rimMargin);
+
+        const innerFrame2 = cardContainer.addChild(GraphicsHelper.exDrawRoundedRect(0, 0, dp.stageRect.width - rimMargin * 2, 1668 - rimMargin * 2, 30, {color: 0xEFEFEF, width:10, alignment:0}, false));
+        innerFrame2.position.set(rimMargin, rimMargin);
+    }
+
+
+
+    initCardFace(id){
         const myData = Utils.findObjectByKey(dp.assets.csv, 'id', id);
 
         const rimMargin = 50;

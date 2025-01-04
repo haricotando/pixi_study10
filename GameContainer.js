@@ -80,7 +80,6 @@ export class GameContainer extends PIXI.Container {
         this.endButton.cursor    = 'pointer';
         this.endButton.eventMode = 'static';
         const onTap = (e) => {
-            console.log('endGame');
             this.readyToDie();
         };
 

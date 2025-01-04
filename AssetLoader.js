@@ -38,6 +38,7 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('flip_card', './assets/flip_card.png');
         PIXI.Assets.add('standby', './assets/standby.png');
         PIXI.Assets.add('description_bg', './assets/description_bg.png');
+        PIXI.Assets.add('card_back', './assets/card_back.png');
 
         PIXI.Assets.add('animal1', './assets/card/animal1.png');
         PIXI.Assets.add('animal2', './assets/card/animal2.png');
@@ -95,12 +96,14 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('1tick3', './assets/snd/1tick3.m4a');
         PIXI.Assets.add('1tick4', './assets/snd/1tick4.m4a');
         PIXI.Assets.add('start_catch1', './assets/snd/start_catch1.mp3');
+        PIXI.Assets.add('insight2', './assets/snd/insight2.mp3');
         
         this._assetsLoad = [
             'game_in_progress',
             'flip_card',
             'standby',
             'description_bg',
+            'card_back',
 
             'animal1',
             'animal2',
@@ -158,6 +161,7 @@ export class AssetLoader extends PIXI.Container {
             '1tick3',
             '1tick4',
             'start_catch1',
+            'insight2',
         ];
 
         const onProgress = (e) => {
@@ -171,10 +175,6 @@ export class AssetLoader extends PIXI.Container {
             this.isAssetLoaded = true;
             this.labelAdditional.text = 'CSV LOADING...';
             this.loadCSV();
-            // this.emit("onComplete", { 
-            //     isAssetLoaded : true,
-            //     message: "アセット読み込み完了"
-            // });
         });
     }
 

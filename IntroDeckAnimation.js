@@ -92,8 +92,12 @@ export class IntroDeckAnimation extends PIXI.Container {
         this.textDescripton.anchor.set(0.5, 0);
         this.textDescripton.x = dp.stageRect.halfWidth;
         this.textDescripton.y = 50;
+        this.textDescripton.alpha = 0;
+
+        gsap.to(this.textDescripton, {alpha:1, duration:0.3, ease:'none', delay:0.2})
+
         
-        this.minVal = 1;
+        this.minVal = 30;
         const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.minVal));
         uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 80);
         // uiSlider.x = 50;
@@ -117,7 +121,7 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
 
-        this.randomVal = 1;
+        this.randomVal = 60;
         const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.randomVal));
         randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 170);
 
@@ -126,7 +130,7 @@ export class IntroDeckAnimation extends PIXI.Container {
             this.randomVal = Math.round(data.value);
             this.randomInterval.text = `最小インターバル: ${this.randomVal}秒`;
         });
-        this.randomInterval = this.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.minVal}秒`, {
+        this.randomInterval = this.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.randomVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 30, fill: 0xFEFEFE,
@@ -136,23 +140,28 @@ export class IntroDeckAnimation extends PIXI.Container {
         this.randomInterval.y = randomSlider.y - 20;
         
 
-        const btnFlipCard = this.addChild(new CommonButton('ゲームを開始'));
-        btnFlipCard.x = dp.stageRect.halfWidth;
-        btnFlipCard.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        const btnStartGame = this.addChild(new CommonButton('ゲームを開始'));
+        btnStartGame.x = dp.stageRect.halfWidth;
+        btnStartGame.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        btnStartGame.alpha = 0;
+
+        gsap.timeline()
+        .to(btnStartGame, {alpha:1, duration:0.3, ease:'none', delay:0.4})
+        .call(()=>{
+            btnStartGame.cursor    = 'pointer';
+            btnStartGame.eventMode = 'static';
+        });
         
-        btnFlipCard.cursor    = 'pointer';
-        btnFlipCard.eventMode = 'static';
         const onTap = (e) => {
 
             dp.game.minInterval = this.minVal;
             dp.game.randomInterval = this.randomVal;
 
             PIXI.sound.play('1tick3');
-            btnFlipCard.eventMode = 'none';
-            btnFlipCard.activate();
+            btnStartGame.eventMode = 'none';
+            btnStartGame.activate();
             gsap.timeline()
-            .to(this.coverBox, {alpha:1, duration:0.4, ease:'none'})
-            .to(this.textDescripton, {alpha:0, duration:0.4, ease:'none'}, '<')
+            .to(this, {alpha:0, duration:0.3, ease:'none'})
             .call(()=>{
                 this.parent.standby();
                 this.parent.initEndButton();
@@ -160,7 +169,6 @@ export class IntroDeckAnimation extends PIXI.Container {
             });
         };
 
-        btnFlipCard.on('pointertap', onTap);
-
+        btnStartGame.on('pointertap', onTap);
     }
 }

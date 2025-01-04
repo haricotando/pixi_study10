@@ -8,8 +8,13 @@ export class CardPreparer extends PIXI.Container {
     
     constructor(delay, cardId) {
         super();
+        this.init(delay, cardId);
+    }
+
+    init(delay, cardId){
         this.sortableChildren = true;
         this.cardId = cardId;
+        
 
         this.textAndButton = this.addChild(new PIXI.Container());
         
@@ -51,20 +56,20 @@ export class CardPreparer extends PIXI.Container {
             .call(()=>{
                 progressBar.visible = false;
             });
+
     }
 
     initTextAndButton(){
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
 
-        const flipcard = PIXI.Sprite.from(nextCardInfo.event_trigger == 'onImmediateIntervention' ? dataProvider.assets.flip_card : dataProvider.assets.standby);
-        const flipcard80Height = Math.round(flipcard.height * 0.8);
-        
-        flipcard.anchor.set(0.5);
-        Utils.layoutCenter(flipcard, dp.stageRect);
-        flipcard.scale.set(0.1);
-        this.addChild(flipcard);
-        gsap.timeline()
-            .to(flipcard.scale, {x:0.8, y:0.8, duration:0.3, ease:'expo.out'})
+        this.eventTypeImage = PIXI.Sprite.from(nextCardInfo.event_trigger == 'onImmediateIntervention' ? dataProvider.assets.flip_card : dataProvider.assets.standby);
+        const flipcard80Height = Math.round(this.eventTypeImage.height * 0.8);
+
+        this.eventTypeImage.anchor.set(0.5);
+        this.eventTypeImage.x = dp.stageRect.halfWidth;
+        this.eventTypeImage.y = dp.stageRect.height / 8;
+        this.eventTypeImage.scale.set(0.3);
+        this.addChild(this.eventTypeImage);
 
         const message = this.addChild(new PIXI.Text("...", {
             fontFamily: 'Kaisei Decol', 
@@ -77,24 +82,22 @@ export class CardPreparer extends PIXI.Container {
         }));
         message.anchor.set(0.5, 0.5);
         message.x = dp.stageRect.halfWidth;
-        message.y = (flipcard.y - flipcard80Height / 2) / 1.8;
+        message.y = this.eventTypeImage.y + this.eventTypeImage.height;
 
+        this.eventTypeImage.scale.set(0.1);
+        gsap.timeline()
+            .to(this.eventTypeImage.scale, {x:0.3, y:0.3, duration:0.3, ease:'expo.out'})
 
-
-        
         if(nextCardInfo.event_trigger == 'onImmediateIntervention'){
-            message.text = '手番のプレイヤーは\n手を止めて\nカードをめくる';
+            message.text = '手番プレイヤーは\nすぐにカードをめくる';
         }else{
-            message.text = '手番のプレイヤーは\nアクション終了後\nカードをめくる';
+            message.text = '手番プレイヤーは\n行動後カードをめくる';
         }
 
         const btnFlipCard = this.textAndButton.addChild(new CommonButton('カードをめくる'));
         btnFlipCard.x = dp.stageRect.halfWidth;
-        const diff = dp.stageRect.height - (flipcard.y + flipcard80Height / 2);
-        btnFlipCard.y = (flipcard.y + flipcard80Height / 2) + (diff / 1.8)
-
-
-        // btnFlipCard.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        const diff = dp.stageRect.height - (this.eventTypeImage.y + flipcard80Height / 2);
+        btnFlipCard.y = dp.stageRect.height - dp.stageRect.height / 10;
         btnFlipCard.alpha = 0;
 
         gsap.timeline({delay: 0.5})
@@ -106,36 +109,56 @@ export class CardPreparer extends PIXI.Container {
         
         const onTap = (e) => {
             gsap.timeline()
-                .to(flipcard.scale, {x:0.3, y:0.3, duration:0.3, ease:'none'})
+                .to(this.eventTypeImage.scale, {x:0.3, y:0.3, duration:0.3, ease:'none'})
                 .to(message, {alpha:0, duration:0.3, ease:'none'}, '<')
             btnFlipCard.eventMode = 'none';
             this.flipCard();
             this.textAndButton.visible = false;
-            // PIXI.sound.play('start_catch1');
-            PIXI.sound.play('1tick1');
+            // PIXI.sound.play('1tick3');
+            PIXI.sound.play('insight2');
         };
 
         btnFlipCard.on('pointertap', onTap);
 
+        this.cardBack = this.addChild(new Card('card_back'));
+        this.cardBack.scale.set(1);
+        this.cardBack.rotation = Utils.degreesToRadians(Math.random() * 50 -25);
+        this.cardBack.x = dp.stageRect.halfWidth;
+        this.cardBack.y = message.y + (btnFlipCard.y - message.y) / 2;
+        const cardBackSize = 0.45;
 
-
-
-
-
+        gsap.timeline()
+            .to(this.cardBack, {rotation: Utils.degreesToRadians(Math.random() * 20 -10), duration:0.3, ease:'sine.out'}, '<')
+            .to(this.cardBack.scale, {x:cardBackSize, y:cardBackSize, duration:0.2, ease:'sine.in'}, '<')
+            .to(this.cardBack.scale, {x:cardBackSize*1.1, y:cardBackSize*1.1, duration:0.15, ease:'back.out(2)'})
+            .to(this.cardBack.scale, {x:cardBackSize, y:cardBackSize, duration:0.15})
+        this.cardBack.zIndex = 5;
     }
 
     flipCard(){
-        const card0 = this.addChild(new Card(this.cardId));
-        card0.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight - 120);
-        card0.scale.set(1);
-        card0.alpha = 0;
-        gsap.timeline({delay:0.1})
-            .to(card0, {alpha:1, duration:0.5, ease:'none'})
-            .to(card0.scale, {x:0.8, y:0.8, duration:0.3, ease:'expo.out'}, '<')
+        this.whiteOverray = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0xFFFFFF}));
+        this.whiteOverray.alpha = 0;
+        this.whiteOverray.zIndex = 20;
 
+        gsap.timeline()
+            .to(this.cardBack.scale, {x:0.7, y:0.7, duration:0.2, ease:'expo.out'})
+            // .to(this.cardBack, {y:dp.stageRect.halfHeight, rotation:Utils.degreesToRadians(15 - Math.random()*30), duration:0.3, ease:'none'}, '<')
+            .to(this.whiteOverray, {alpha:1, duration:0.2, ease:'expo.out'}, '<')
+            .call(()=>{
+                // this.removeChild(this.whiteOverray);
+                this.removeChild(this.cardBack);
+                this.removeChild(this.eventTypeImage);
+                this.flipCard2();
+            });
+            
+    }
+
+
+    flipCard2(){
+        // 
         const startButton = this.addChild(new CommonButton('続ける'));
         startButton.x = dp.stageRect.halfWidth;
-        startButton.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        startButton.y = dp.stageRect.height - (dp.stageRect.height / 14);
         startButton.alpha = 0;
         gsap.timeline({delay:0.5})
         .to(startButton, {alpha:1, duration:0.4, ease:'none'})
@@ -152,14 +175,24 @@ export class CardPreparer extends PIXI.Container {
         };
 
         startButton.on('pointertap', onTap);
-            
+
+        const card = this.addChild(new Card(this.cardId));
+        card.x = dp.stageRect.halfWidth;
+        card.y = (startButton.y - startButton.height / 2)/2 + 55;
+        // card.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
+        card.scale.set(0.7);
+        card.alpha = 0;
+        card.rotation = this.cardBack.rotation;
+        gsap.timeline({delay:0.1})
+            .to(this.whiteOverray, {alpha:0, duration:0.2, ease:'expo.out'})
+            .to(card, {alpha:1, duration:0.3, ease:'none'}, '<')
+            .to(card, {rotation:0, duration:0.6, ease:'back.out(0.6)'}, '<')
+            .to(card.scale, {x:0.8, y:0.8, duration:0.6, ease:'expo.out'}, '<')
     }
 
 
-
-
     onExecuteFX(){
-        
+        // return false;
         const fxContainer = this.addChild(new PIXI.Container());
         const fxfx = this.initFX(fxContainer);
         fxfx.scale.set(0.4);
@@ -236,24 +269,5 @@ export class CardPreparer extends PIXI.Container {
         line.alpha = Math.random()+0.1;
 
         return line;
-    }
-
-
-
-
-
-
-
-
-
-    initDebugger(delay){
-        const progressBar = this.addChild(GraphicsHelper.exDrawRect(0, 0, 400, 20, false, {color:0xFFFF00}));
-        progressBar.x = dp.stageRect.halfWidth;
-        progressBar.y = dp.stageRect.halfWidth;
-        gsap.timeline()
-            .to(progressBar, {width:1, duration: delay / 1000, ease:'none'})
-            .call(()=>{
-                progressBar.visible = false;
-            });
     }
 }
