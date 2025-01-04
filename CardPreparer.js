@@ -11,7 +11,6 @@ export class CardPreparer extends PIXI.Container {
         this.sortableChildren = true;
         this.cardId = cardId;
 
-        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
         this.textAndButton = this.addChild(new PIXI.Container());
         
         const hourglass = PIXI.Sprite.from(dataProvider.assets.game_in_progress);
@@ -58,6 +57,8 @@ export class CardPreparer extends PIXI.Container {
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
 
         const flipcard = PIXI.Sprite.from(nextCardInfo.event_trigger == 'onImmediateIntervention' ? dataProvider.assets.flip_card : dataProvider.assets.standby);
+        const flipcard80Height = Math.round(flipcard.height * 0.8);
+        
         flipcard.anchor.set(0.5);
         Utils.layoutCenter(flipcard, dp.stageRect);
         flipcard.scale.set(0.1);
@@ -74,9 +75,9 @@ export class CardPreparer extends PIXI.Container {
             wordWrap: true,
             wordWrapWidth: 800,
         }));
-        message.anchor.set(0.5, 0);
+        message.anchor.set(0.5, 0.5);
         message.x = dp.stageRect.halfWidth;
-        message.y = 100;
+        message.y = (flipcard.y - flipcard80Height / 2) / 1.8;
 
 
 
@@ -89,7 +90,11 @@ export class CardPreparer extends PIXI.Container {
 
         const btnFlipCard = this.textAndButton.addChild(new CommonButton('カードをめくる'));
         btnFlipCard.x = dp.stageRect.halfWidth;
-        btnFlipCard.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        const diff = dp.stageRect.height - (flipcard.y + flipcard80Height / 2);
+        btnFlipCard.y = (flipcard.y + flipcard80Height / 2) + (diff / 1.8)
+
+
+        // btnFlipCard.y = dp.stageRect.height - (dp.stageRect.height / 10);
         btnFlipCard.alpha = 0;
 
         gsap.timeline({delay: 0.5})

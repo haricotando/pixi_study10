@@ -92,8 +92,9 @@ export class IntroDeckAnimation extends PIXI.Container {
         this.textDescripton.anchor.set(0.5, 0);
         this.textDescripton.x = dp.stageRect.halfWidth;
         this.textDescripton.y = 50;
-
-        const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, 30));
+        
+        this.minVal = 1;
+        const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.minVal));
         uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 80);
         // uiSlider.x = 50;
         
@@ -104,7 +105,6 @@ export class IntroDeckAnimation extends PIXI.Container {
             this.minInterval.text = `最小インターバル: ${this.minVal}秒`;
         });
 
-        this.minVal = 30;
         this.minInterval = this.addChild(new PIXI.Text(`最小インターバル: ${this.minVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
@@ -117,7 +117,8 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
 
-        const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, 30));
+        this.randomVal = 1;
+        const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.randomVal));
         randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 170);
 
         randomSlider.on('customEvent', (data) => {
@@ -125,7 +126,6 @@ export class IntroDeckAnimation extends PIXI.Container {
             this.randomVal = Math.round(data.value);
             this.randomInterval.text = `最小インターバル: ${this.randomVal}秒`;
         });
-        this.randomVal = 30;
         this.randomInterval = this.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.minVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
