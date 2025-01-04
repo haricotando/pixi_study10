@@ -115,22 +115,23 @@ export class CardPreparer extends PIXI.Container {
             this.flipCard();
             this.textAndButton.visible = false;
             // PIXI.sound.play('1tick3');
-            PIXI.sound.play('insight2');
+            PIXI.sound.play('pop1');
+            PIXI.sound.play('pop2');
         };
 
         btnFlipCard.on('pointertap', onTap);
 
         this.cardBack = this.addChild(new Card('card_back'));
         this.cardBack.scale.set(1);
-        this.cardBack.rotation = Utils.degreesToRadians(Math.random() * 50 -25);
+        this.cardBack.rotation = Utils.degreesToRadians(Math.random() * 10 -5);
         this.cardBack.x = dp.stageRect.halfWidth;
         this.cardBack.y = message.y + (btnFlipCard.y - message.y) / 2;
         const cardBackSize = 0.45;
 
         gsap.timeline()
-            .to(this.cardBack, {rotation: Utils.degreesToRadians(Math.random() * 20 -10), duration:0.3, ease:'sine.out'}, '<')
+            .to(this.cardBack, {rotation: Utils.degreesToRadians(Math.random() * 10 -5), duration:0.2, ease:'sine.out'}, '<')
             .to(this.cardBack.scale, {x:cardBackSize, y:cardBackSize, duration:0.2, ease:'sine.in'}, '<')
-            .to(this.cardBack.scale, {x:cardBackSize*1.1, y:cardBackSize*1.1, duration:0.15, ease:'back.out(2)'})
+            .to(this.cardBack.scale, {x:cardBackSize*1.05, y:cardBackSize*1.05, duration:0.15, ease:'back.out(0.4)'})
             .to(this.cardBack.scale, {x:cardBackSize, y:cardBackSize, duration:0.15})
         this.cardBack.zIndex = 5;
     }
@@ -182,12 +183,12 @@ export class CardPreparer extends PIXI.Container {
         // card.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
         card.scale.set(0.7);
         card.alpha = 0;
-        card.rotation = this.cardBack.rotation;
+        // card.rotation = this.cardBack.rotation;
         gsap.timeline({delay:0.1})
             .to(this.whiteOverray, {alpha:0, duration:0.2, ease:'expo.out'})
-            .to(card, {alpha:1, duration:0.3, ease:'none'}, '<')
-            .to(card, {rotation:0, duration:0.6, ease:'back.out(0.6)'}, '<')
-            .to(card.scale, {x:0.8, y:0.8, duration:0.6, ease:'expo.out'}, '<')
+            .to(card, {alpha:1, duration:0.3, ease:'none'}, '<0.2')
+            // .to(card, {rotation:0, duration:0.3, ease:'back.out(0.6)'}, '<0.1')
+            .to(card.scale, {x:0.8, y:0.8, duration:0.6, ease:'expo.out'}, '<0.1')
     }
 
 

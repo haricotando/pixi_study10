@@ -94,9 +94,12 @@ export class AssetLoader extends PIXI.Container {
         PIXI.Assets.add('1tick1', './assets/snd/1tick1.m4a');
         PIXI.Assets.add('1tick2', './assets/snd/1tick2.m4a');
         PIXI.Assets.add('1tick3', './assets/snd/1tick3.m4a');
-        PIXI.Assets.add('1tick4', './assets/snd/1tick4.m4a');
+        // PIXI.Assets.add('1tick4', './assets/snd/1tick4.m4a');
         PIXI.Assets.add('start_catch1', './assets/snd/start_catch1.mp3');
-        PIXI.Assets.add('insight2', './assets/snd/insight2.mp3');
+        // PIXI.Assets.add('start_catch2', './assets/snd/start_catch2.mp3');
+        // PIXI.Assets.add('insight2', './assets/snd/insight2.mp3');
+        PIXI.Assets.add('pop1', './assets/snd/pop1.mp3');
+        PIXI.Assets.add('pop2', './assets/snd/pop2.mp3');
         
         this._assetsLoad = [
             'game_in_progress',
@@ -159,9 +162,12 @@ export class AssetLoader extends PIXI.Container {
             '1tick1',
             '1tick2',
             '1tick3',
-            '1tick4',
+            // '1tick4',
             'start_catch1',
-            'insight2',
+            // 'start_catch2',
+            // 'insight2',
+            'pop1',
+            'pop2',
         ];
 
         const onProgress = (e) => {

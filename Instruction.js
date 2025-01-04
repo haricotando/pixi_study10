@@ -23,7 +23,7 @@ export class Instruction extends PIXI.Container {
         textTitle.x = dp.stageRect.halfWidth;
         textTitle.y = 100;
 
-        const textDescripton = this.addChild(new PIXI.Text("（詳細は後から書く）\n1. 物理トランプを用意する\n2. カードを配る\n3. ローカルルールを確認\n4. 「進む」を押す", {
+        const textDescripton = this.addChild(new PIXI.Text("（詳細は後から書く）\nこのゲームは大富豪を拡張する\n\n1. 物理トランプを用意する\n2. カードを配る\n3. ローカルルールを確認\n4. 「進む」を押す", {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 50, fill: 0xFEFEFE,

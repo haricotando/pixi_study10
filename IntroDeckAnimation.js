@@ -18,13 +18,15 @@ export class IntroDeckAnimation extends PIXI.Container {
         const card0 = this.addChild(new Card(0));
         card0.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
         card0.scale.set(1.5);
-        card0.rotation = Utils.degreesToRadians(-7);
+        card0.rotation = Utils.degreesToRadians(Math.random()*10 - 5);
         card0.alpha = 0;
         gsap.timeline({delay:0.1})
             .to(card0, {alpha:1, duration:0.5, ease:'none'})
-            .to(card0.scale, {x:0.8, y:0.8, duration:1.1, ease:'expo.out'}, '<')
             .to(card0, {rotation:Utils.degreesToRadians(0), duration:0.5, ease:'sine.out'}, '<')
+            .to(card0.scale, {x:0.8, y:0.8, duration:1.1, ease:'expo.out'}, '<')
             .to(card0.scale, {x:0.78, y:0.78, duration:0.5, ease:'sine.inOut', delay: 0.4})
+
+
             .to(card0, {y:0, duration:0.5, ease:'circ.in'}, '<0.1')
             .to(card0, {alpha:0, duration:0.3, ease:'none'}, '<0.2')
             .call(()=>{
@@ -121,7 +123,7 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
 
-        this.randomVal = 60;
+        this.randomVal = 30;
         const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.randomVal));
         randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 170);
 
