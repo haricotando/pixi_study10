@@ -15,7 +15,7 @@ export class GameContainer extends PIXI.Container {
     }
 
     init(){
-        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
+        // const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
         this.addChild(new IntroDeckAnimation());
         setTimeout(() => {
             PIXI.sound.play('1tick1');

@@ -12,7 +12,7 @@ export class Instruction extends PIXI.Container {
     }
 
     init(){
-        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
+        // const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color:0x000000}));
         const textTitle = this.addChild(new PIXI.Text("INSTRUCTION", {
             fontFamily: 'Inter', 
             fontWeight: 400,
@@ -58,6 +58,7 @@ export class Instruction extends PIXI.Container {
         const onTap = (e) => {
             startButton.eventMode = 'none';
             this.parent.initGameContainer();
+            this.parent.removeChild(this);
         };
 
         startButton.on('pointertap', onTap);
