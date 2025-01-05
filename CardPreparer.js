@@ -180,15 +180,12 @@ export class CardPreparer extends PIXI.Container {
         const card = this.addChild(new Card(this.cardId));
         card.x = dp.stageRect.halfWidth;
         card.y = (startButton.y - startButton.height / 2)/2 + 55;
-        // card.position.set(dp.stageRect.halfWidth, dp.stageRect.halfHeight);
         card.scale.set(0.7);
         card.alpha = 0;
-        // card.rotation = this.cardBack.rotation;
         gsap.timeline({delay:0.1})
             .to(this.whiteOverray, {alpha:0, duration:0.2, ease:'expo.out'})
             .to(card, {alpha:1, duration:0.3, ease:'none'}, '<0.2')
-            // .to(card, {rotation:0, duration:0.3, ease:'back.out(0.6)'}, '<0.1')
-            .to(card.scale, {x:0.8, y:0.8, duration:0.6, ease:'expo.out'}, '<0.1')
+            .to(card.scale, {x:0.78, y:0.78, duration:0.6, ease:'expo.out'}, '<0.1')
     }
 
 
