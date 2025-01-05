@@ -1,13 +1,14 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import { ApplicationRoot } from "./ApplicationRoot.js";
-import { viewQRcode } from "./viewQRcode.js";
+import { QRView } from "./QRView.js";
 import Utils from "./class/util/Utils.js";
 
 console.log(PIXI.VERSION)
 /* ------------------------------------------------------------
     変数定義
 ------------------------------------------------------------ */
-const allowMobileOnly = Utils.isOnGithub();
+const allowMobileOnly = false;
+// const allowMobileOnly = Utils.isOnGithub();
 const backgroundColor = 0x1A1F22;
 const basePCView = {width: 980, height: 1668};
 
@@ -75,7 +76,7 @@ function init(){
     
     // Instance作成
     if(!Utils.isMobileDevice() && allowMobileOnly){
-        const appRoot = app.stage.addChild(new viewQRcode());
+        const appRoot = app.stage.addChild(new QRView());
     }else{
         const appRoot = app.stage.addChild(new ApplicationRoot());
         if(Utils.isMobileDevice()){
