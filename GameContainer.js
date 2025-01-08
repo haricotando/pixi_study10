@@ -10,6 +10,7 @@ export class GameContainer extends PIXI.Container {
         super();
         this.sortableChildren = true;
         Utils.shuffleArray(dp.deck);
+        dp.game.currentIndex = -1;
         this.init();
         // this.standby();
     }
@@ -29,6 +30,13 @@ export class GameContainer extends PIXI.Container {
     }
     
     standby(){
+        dp.game.currentIndex ++;
+        if(dp.game.currentIndex >= dp.deck.length){
+            Utils.shuffleArray(dp.deck);
+            dp.game.currentIndex = 0;
+        }
+        
+
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
         const waitingDuration = this.diceNextInterval();
 
@@ -42,7 +50,6 @@ export class GameContainer extends PIXI.Container {
             }
             nextCard.onExecuteFX();
         }, waitingDuration);
-        dp.game.currentIndex ++;
     }
 
     initEndButton(){
