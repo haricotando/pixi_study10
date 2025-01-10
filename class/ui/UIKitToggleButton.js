@@ -18,7 +18,7 @@ export class UIKitToggleButton extends PIXI.Container {
         const black = new PIXI.Graphics().beginFill(0x000000).drawRoundedRect(0, 0, baseSize * 2, baseSize, baseSize / 2);
         this.addChild(black);
 
-        const background = new PIXI.Graphics().lineStyle(2, 0xFFFFFF).beginFill(0xD9D9D9).drawRoundedRect(0, 0, baseSize * 2, baseSize, baseSize / 2);
+        const background = new PIXI.Graphics().lineStyle(2, 0xFFFFFF).beginFill(0x6FDCE3).drawRoundedRect(0, 0, baseSize * 2, baseSize, baseSize / 2);
         this.addChild(background);
         background.cursor = 'pointer';
         background.eventMode = 'static';
@@ -48,7 +48,7 @@ export class UIKitToggleButton extends PIXI.Container {
         }
         
         const update = () => {
-            background.alpha = this.val ? 1 : 0.7;
+            background.alpha = this.val ? 1 : 0.2;
             button.alpha = this.val ? 1 : 0.8;
             button.x = this.val ? Math.round(baseSize * 1.5) : baseSize / 2;
         }

@@ -78,9 +78,7 @@ export class IntroDeckAnimation extends PIXI.Container {
             
 ＜手番終了後＞
 手番のプレイヤーは
-カードを出した後にイベントを見る
-            
-＜発生頻度の設定＞`, 
+カードを出した後にイベントを見る`, 
         {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
@@ -99,8 +97,15 @@ export class IntroDeckAnimation extends PIXI.Container {
         gsap.to(this.textDescripton, {alpha:1, duration:0.3, ease:'none', delay:0.2})
 
         
-        this.minVal = 30;
-        const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.minVal));
+        /**
+         * config
+         */
+
+        const configContainer = this.addChild(new PIXI.Container());
+        //＜発生頻度の設定＞
+
+        this.minVal = 10;
+        const uiSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 100, this.minVal));
         uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 80);
         // uiSlider.x = 50;
         
@@ -111,7 +116,7 @@ export class IntroDeckAnimation extends PIXI.Container {
             this.minInterval.text = `最小インターバル: ${this.minVal}秒`;
         });
 
-        this.minInterval = this.addChild(new PIXI.Text(`最小インターバル: ${this.minVal}秒`, {
+        this.minInterval = configContainer.addChild(new PIXI.Text(`最小インターバル: ${this.minVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 30, fill: 0xFEFEFE,
@@ -123,16 +128,16 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
 
-        this.randomVal = 30;
-        const randomSlider = this.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 300, this.randomVal));
-        randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 170);
+        this.randomVal = 10;
+        const randomSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 100, this.randomVal));
+        randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 150);
 
         randomSlider.on('customEvent', (data) => {
             
             this.randomVal = Math.round(data.value);
             this.randomInterval.text = `最小インターバル: ${this.randomVal}秒`;
         });
-        this.randomInterval = this.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.randomVal}秒`, {
+        this.randomInterval = configContainer.addChild(new PIXI.Text(`追加ランダムインターバル: ${this.randomVal}秒`, {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 30, fill: 0xFEFEFE,
@@ -140,6 +145,24 @@ export class IntroDeckAnimation extends PIXI.Container {
         this.randomInterval.anchor.set(0.5, 0.5);
         this.randomInterval.x = dp.stageRect.halfWidth;
         this.randomInterval.y = randomSlider.y - 20;
+
+        this.countdown = configContainer.addChild(new PIXI.Text('カウントダウンを表示する', {
+            fontFamily: 'Kaisei Decol', 
+            fontWeight: 700,
+            fontSize: 30, fill: 0xFEFEFE,
+        }));
+        this.countdown.anchor.set(0.5, 0.5);
+        this.countdown.x = dp.stageRect.halfWidth;
+        this.countdown.y = randomSlider.y + 150;
+
+        const toggleCountdown = configContainer.addChild(Utils.addUIToggleButton(dp.app, dp.game, 'showCountdown', dp.game.showCountdown));
+        toggleCountdown.x = dp.stageRect.halfWidth - toggleCountdown.width / 2;
+        toggleCountdown.y = this.countdown.y + 50;
+
+        toggleCountdown.on('customEvent', (data) => {
+            dp.game.showCountdown = data.value;
+        });
+
         
 
         const btnStartGame = this.addChild(new CommonButton('ゲームを開始'));

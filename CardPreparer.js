@@ -26,6 +26,9 @@ export class CardPreparer extends PIXI.Container {
         const progressBar = this.addChild(GraphicsHelper.exDrawRect(0, 0, hourglass.width, 20, false, {color:0xFFFF00}));
         progressBar.x = dp.stageRect.halfWidth - hourglass.width / 2;
         progressBar.y = hourglass.y + hourglass.height /2;
+        if(!dp.game.showCountdown){
+            progressBar.visible = false;
+        }
 
 
         this.gameInProgressText = this.addChild(new PIXI.Text("ゲームが進行中...", {
