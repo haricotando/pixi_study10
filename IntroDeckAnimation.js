@@ -31,6 +31,7 @@ export class IntroDeckAnimation extends PIXI.Container {
             .to(card0, {alpha:0, duration:0.3, ease:'none'}, '<0.2')
             .call(()=>{
                 this.initOptionScreen();
+                this.initCardListButton();
             });
         card0.zIndex = 10;
     };
@@ -91,7 +92,7 @@ export class IntroDeckAnimation extends PIXI.Container {
         }));
         this.textDescripton.anchor.set(0.5, 0);
         this.textDescripton.x = dp.stageRect.halfWidth;
-        this.textDescripton.y = 50;
+        this.textDescripton.y = 120;
         this.textDescripton.alpha = 0;
 
         gsap.to(this.textDescripton, {alpha:1, duration:0.3, ease:'none', delay:0.2})
@@ -129,7 +130,7 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
         this.randomVal = 10;
-        const randomSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 100, this.randomVal));
+        const randomSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'randomVal', 1, 100, this.randomVal));
         randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 150);
 
         randomSlider.on('customEvent', (data) => {
@@ -146,18 +147,21 @@ export class IntroDeckAnimation extends PIXI.Container {
         this.randomInterval.x = dp.stageRect.halfWidth;
         this.randomInterval.y = randomSlider.y - 20;
 
-        this.countdown = configContainer.addChild(new PIXI.Text('カウントダウンを表示する', {
+        const countdownContainer = configContainer.addChild(new PIXI.Container());
+        this.countdown = countdownContainer.addChild(new PIXI.Text('カウントダウンを表示する', {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 30, fill: 0xFEFEFE,
         }));
-        this.countdown.anchor.set(0.5, 0.5);
-        this.countdown.x = dp.stageRect.halfWidth;
+        this.countdown.anchor.set(0, 0.5);
+        // this.countdown.x = dp.stageRect.halfWidth;
         this.countdown.y = randomSlider.y + 150;
 
-        const toggleCountdown = configContainer.addChild(Utils.addUIToggleButton(dp.app, dp.game, 'showCountdown', dp.game.showCountdown));
-        toggleCountdown.x = dp.stageRect.halfWidth - toggleCountdown.width / 2;
-        toggleCountdown.y = this.countdown.y + 50;
+        const toggleCountdown = countdownContainer.addChild(Utils.addUIToggleButton(dp.app, dp.game, 'showCountdown', dp.game.showCountdown));
+        toggleCountdown.x = this.countdown.x + this.countdown.width + 30;
+        toggleCountdown.y = this.countdown.y - toggleCountdown.height / 2;
+
+        countdownContainer.x = dp.stageRect.halfWidth - countdownContainer.width / 2;
 
         toggleCountdown.on('customEvent', (data) => {
             dp.game.showCountdown = data.value;
@@ -195,5 +199,54 @@ export class IntroDeckAnimation extends PIXI.Container {
         };
 
         btnStartGame.on('pointertap', onTap);
+    }
+
+    initCardListButton(){
+        this.cardListButton = this.addChild(new PIXI.Container());
+        this.cardListButton.zIndex = 10;
+        
+        this.background = GraphicsHelper.exDrawRoundedRect(0, 0, 250, 70, 15, false, {color:0xFFFFFF});
+        this.background.alpha = 0.2;
+        Utils.pivotCenter(this.background);
+        this.cardListButton.addChild(this.background);
+        this.backgroundRim = GraphicsHelper.exDrawRoundedRect(0, 0, 250, 70, 15, {color:0xFFFFFF, width:4}, false);
+        this.backgroundRim.alpha = 0.5;
+        Utils.pivotCenter(this.backgroundRim);
+        this.cardListButton.addChild(this.backgroundRim);
+
+        this.labelText = this.cardListButton.addChild(new PIXI.Text('カード一覧', {
+            fontFamily: 'Kaisei Decol', 
+            fontWeight: 700,
+            fontSize: 40, fill: 0xEFEFEF,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowAlpha: 0.9,
+            dropShadowBlur: 16,
+            dropShadowAngle: 0,
+            dropShadowDistance: 0,
+            
+        }));
+        this.labelText.anchor.set(0.5, 0.5);
+
+        this.cardListButton.position.set(
+            dp.stageRect.halfWidth,
+            this.cardListButton.height / 2 + 20
+        );
+
+        this.cardListButton.cursor    = 'pointer';
+        this.cardListButton.eventMode = 'static';
+        const onTap = (e) => {
+            PIXI.sound.play('1tick3');
+            this.cardListButton.eventMode = 'none';
+            // this.cardListButton.activate();
+            gsap.timeline()
+                .to(this, {alpha:0, duration:0.3, ease:'none'})
+                .call(()=>{
+                    this.parent.initCardView();
+                    this.parent.removeChild((this));
+            });
+        };
+
+        this.cardListButton.on('pointertap', onTap);
     }
 }

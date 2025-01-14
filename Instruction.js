@@ -37,12 +37,12 @@ export class Instruction extends PIXI.Container {
         textDescripton.x = dp.stageRect.halfWidth;
         textDescripton.y = 500;
 
-        textTitle.cursor = 'pointer';
-        textTitle.eventMode = 'static';
-        const onTap = (e) => {
-        this.addChild(new CardView());
-        };
-        textTitle.on('pointertap', onTap);
+        // textTitle.cursor = 'pointer';
+        // textTitle.eventMode = 'static';
+        // const onTap = (e) => {
+        // this.addChild(new CardView());
+        // };
+        // textTitle.on('pointertap', onTap);
 
 
         this.initButton();

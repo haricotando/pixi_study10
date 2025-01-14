@@ -3,6 +3,7 @@ import GraphicsHelper from "./class/helper/GraphicsHelper.js";
 import Utils from "./class/util/Utils.js";
 import { IntroDeckAnimation } from "./IntroDeckAnimation.js";
 import { CardPreparer } from "./CardPreparer.js";
+import { CardView } from "./CardView.js";
 
 export class GameContainer extends PIXI.Container {
     
@@ -30,6 +31,8 @@ export class GameContainer extends PIXI.Container {
     }
     
     standby(){
+        console.log('standby called');
+        
         dp.game.currentIndex ++;
         if(dp.game.currentIndex >= dp.deck.length){
             Utils.shuffleArray(dp.deck);
@@ -39,6 +42,8 @@ export class GameContainer extends PIXI.Container {
 
         const nextCardInfo = Utils.findObjectById(dp.assets.csv, dp.deck[dp.game.currentIndex]);
         const waitingDuration = this.diceNextInterval();
+        console.log('waiting...' + waitingDuration/1000);
+        
 
         const nextCard = this.addChild(new CardPreparer(waitingDuration, dp.deck[dp.game.currentIndex]));
         
@@ -98,12 +103,17 @@ export class GameContainer extends PIXI.Container {
         this.parent.initGameContainer();
         this.parent.removeChild(this);
     }
+
+    initCardView(){
+        this.addChild(new CardView());
+    }
     
 
     diceNextInterval(){
         const secRange = dp.game.randomInterval;
         const minSec = dp.game.minInterval;
         const randomSec = Math.round(Math.random() * secRange);
+        
         const finalSec = (minSec + randomSec) * 1000;
         return finalSec;
     }
