@@ -5,7 +5,7 @@ import Utils from "./class/util/Utils.js";
 
 console.log(PIXI.VERSION)
 /* ------------------------------------------------------------
-    変数定義
+    Config
 ------------------------------------------------------------ */
 const allowMobileOnly = false;
 // const allowMobileOnly = Utils.isOnGithub();
@@ -13,7 +13,7 @@ const backgroundColor = 0x1A1F22;
 const basePCView = {width: 980, height: 1668};
 
 /* ------------------------------------------------------------
-    アセット読み込み
+    フォント読み込み
 ------------------------------------------------------------ */
 WebFont.load({
     google: {
@@ -37,6 +37,7 @@ WebFont.load({
 
 function init(){
     let appConfig = {background: backgroundColor};
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     
     // Setup
     if(Utils.isMobileDevice()){
@@ -44,9 +45,6 @@ function init(){
     }else{
         appConfig.width = allowMobileOnly ? 400 : basePCView.width;
         appConfig.height = allowMobileOnly ? 400 : basePCView.height;
-        // 高解像度端末対応フラグ
-        // appConfig.resolution = window.devicePixelRatio || 1;
-        // appConfig.autoDensity = true;
         // canvasを中央へ
         const element = document.body;
         element.style.padding = '0';
@@ -56,11 +54,13 @@ function init(){
         element.style.height = '100vh';
     }
 
-    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    // 高解像度端末対応フラグ
+    // appConfig.resolution = window.devicePixelRatio || 1;
+    // appConfig.autoDensity = true;
+    
     let app = new PIXI.Application(appConfig);
     app.view.id = 'pixi';
     document.body.appendChild(app.view);
-    const canvas = document.getElementById('pixi');
 
     dp.app = app;
     dp.stageRect = {
@@ -74,11 +74,11 @@ function init(){
         negativeHalfHeight: 0- app.screen.height * 0.5,
     }
     
-    // Instance作成
+    // デバイス分岐でPIXIAPPインスタンス
     if(!Utils.isMobileDevice() && allowMobileOnly){
-        const appRoot = app.stage.addChild(new QRView());
+        app.stage.addChild(new QRView());
     }else{
-        const appRoot = app.stage.addChild(new ApplicationRoot());
+        app.stage.addChild(new ApplicationRoot());
         if(Utils.isMobileDevice()){
             listenOrientationChange();
         }else{
@@ -131,3 +131,37 @@ function listenOrientationChange(){
     }
     window.addEventListener('resize', onOrientationChange);
 }
+
+/* -------------------------------------------------------
+    オーディオ制御
+------------------------------------------------------- */
+function resumeAudioContext() {
+    /**
+     * @todo
+     * 非公式プロパティアクセスになるのでライブラリバージョンを変える際に注意
+     */
+    if (!PIXI.sound._audioContext) {
+        PIXI.sound._audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    const audioCtx = PIXI.sound._audioContext;
+
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume().then(() => {
+        console.log('AudioContext resumed');
+        }).catch(err => {
+            console.error('Error resuming AudioContext:', err);
+        });
+    }
+}
+
+// 1. ユーザー操作（タッチ終了時）に基づく再開
+document.addEventListener('touchend', () => {
+    resumeAudioContext();
+});
+
+// 2. ページの可視性変更時に基づく再開
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        resumeAudioContext();
+    }
+});
