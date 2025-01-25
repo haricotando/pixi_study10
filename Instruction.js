@@ -23,7 +23,9 @@ export class Instruction extends PIXI.Container {
         textTitle.x = dp.stageRect.halfWidth;
         textTitle.y = 100;
 
-        const textDescripton = this.addChild(new PIXI.Text("（詳細は後から書く）\nこのゲームは大富豪を拡張する\n\n1. 物理トランプを用意する\n2. カードを配る\n3. ローカルルールを確認\n4. 「進む」を押す", {
+        this.initButton();
+
+        const textDescripton = this.addChild(new PIXI.Text("STUDY10「既存ゲームの拡張」\n既存ゲームの進行を外部から干渉しルールを変えていくことで見つかる\n面白さを検証するプロトタイピング\n\nこのブランチでは\n「大富豪」を拡張する\n\n1. 物理トランプを用意する\n2. カードを配る\n3. ローカルルールを確認する\n4. 「進む」を押す", {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
             fontSize: 50, fill: 0xFEFEFE,
@@ -33,35 +35,28 @@ export class Instruction extends PIXI.Container {
             wordWrapWidth: 800,
             lineHeight: 80,
         }));
-        textDescripton.anchor.set(0.5, 0);
+        textDescripton.anchor.set(0.5, 0.5);
         textDescripton.x = dp.stageRect.halfWidth;
-        textDescripton.y = 500;
+        const tdOffset =  (this.startButton.y - textTitle.y) / 2;
+        textDescripton.y = textTitle.y + tdOffset;
+        // textDescripton.y = 500;
 
-        // textTitle.cursor = 'pointer';
-        // textTitle.eventMode = 'static';
-        // const onTap = (e) => {
-        // this.addChild(new CardView());
-        // };
-        // textTitle.on('pointertap', onTap);
-
-
-        this.initButton();
     }
     
     initButton(){
-        const startButton = this.addChild(new CommonButton('進む'));
-        startButton.x = dp.stageRect.halfWidth;
-        startButton.y = dp.stageRect.height - (dp.stageRect.height / 10);
+        this.startButton = this.addChild(new CommonButton('進む'));
+        this.startButton.x = dp.stageRect.halfWidth;
+        this.startButton.y = dp.stageRect.height - (dp.stageRect.height / 10);
         
-        startButton.cursor    = 'pointer';
-        startButton.eventMode = 'static';
+        this.startButton.cursor    = 'pointer';
+        this.startButton.eventMode = 'static';
         const onTap = (e) => {
-            startButton.eventMode = 'none';
+            this.startButton.eventMode = 'none';
             this.parent.initGameContainer();
             this.parent.removeChild(this);
         };
 
-        startButton.on('pointertap', onTap);
+        this.startButton.on('pointertap', onTap);
 
     }
 }

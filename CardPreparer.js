@@ -70,7 +70,7 @@ export class CardPreparer extends PIXI.Container {
 
         this.eventTypeImage.anchor.set(0.5);
         this.eventTypeImage.x = dp.stageRect.halfWidth;
-        this.eventTypeImage.y = dp.stageRect.height / 8;
+        this.eventTypeImage.y = dp.stageRect.height / 7;
         this.eventTypeImage.scale.set(0.3);
         this.addChild(this.eventTypeImage);
 
@@ -81,20 +81,28 @@ export class CardPreparer extends PIXI.Container {
             align: 'center',
             breakWords: true,
             wordWrap: true,
-            wordWrapWidth: 800,
+            wordWrapWidth: 900,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowAlpha: 0.9,
+            dropShadowBlur: 16,
+            dropShadowAngle: 0,
+            dropShadowDistance: 0,
         }));
         message.anchor.set(0.5, 0.5);
         message.x = dp.stageRect.halfWidth;
-        message.y = this.eventTypeImage.y + this.eventTypeImage.height;
+        message.y = dp.stageRect.halfHeight;
+        // message.y = this.eventTypeImage.y + this.eventTypeImage.height;
+        message.zIndex = 100;
 
         this.eventTypeImage.scale.set(0.1);
         gsap.timeline()
             .to(this.eventTypeImage.scale, {x:0.3, y:0.3, duration:0.3, ease:'expo.out'})
 
         if(nextCardInfo.event_trigger == 'onImmediateIntervention'){
-            message.text = '手番プレイヤーは\nすぐにカードをめくる';
+            message.text = '全員手を止めて\n手番プレイヤーが\nカードをめくる';
         }else{
-            message.text = '手番プレイヤーは\n行動後カードをめくる';
+            message.text = '手番プレイヤー行動後\n次のプレイヤーが\nカードをめくる';
         }
 
         const btnFlipCard = this.textAndButton.addChild(new CommonButton('カードをめくる'));
@@ -128,7 +136,8 @@ export class CardPreparer extends PIXI.Container {
         this.cardBack.scale.set(1);
         this.cardBack.rotation = Utils.degreesToRadians(Math.random() * 10 -5);
         this.cardBack.x = dp.stageRect.halfWidth;
-        this.cardBack.y = message.y + (btnFlipCard.y - message.y) / 2;
+        this.cardBack.y = dp.stageRect.halfHeight + dp.stageRect.halfHeight/10;
+        // this.cardBack.y = message.y + (btnFlipCard.y - message.y) / 2;
         const cardBackSize = 0.45;
 
         gsap.timeline()

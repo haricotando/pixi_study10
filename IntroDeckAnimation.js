@@ -27,8 +27,8 @@ export class IntroDeckAnimation extends PIXI.Container {
             .to(card0.scale, {x:0.78, y:0.78, duration:0.5, ease:'sine.inOut', delay: 0.4})
 
 
-            .to(card0, {y:0, duration:0.5, ease:'circ.in'}, '<0.1')
-            .to(card0, {alpha:0, duration:0.3, ease:'none'}, '<0.2')
+            .to(card0, {y:0, duration:0.5, ease:'circ.in'}, '<0.3')
+            .to(card0, {alpha:0, duration:0.3, ease:'none'}, '<0.3')
             .call(()=>{
                 this.initOptionScreen();
                 this.initCardListButton();
@@ -44,9 +44,9 @@ export class IntroDeckAnimation extends PIXI.Container {
 
         this.imageTable = this.addChild(new PIXI.Container());
         this.coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000}));
-        this.coverBox.alpha = 0;
-        gsap.timeline({delay:2.3})
-            .to(this.coverBox, {alpha:0.7, duration:0.5, ease:'none'})
+        this.coverBox.alpha = 0.7;
+        // gsap.timeline({delay:2})
+            // .to(this.coverBox, {alpha:0.7, duration:0.5, ease:'none'})
 
         Utils.shuffleArray(dp.introDeck);
         const maxDisp = dp.introDeck.length > 20 ? 20 : dp.introDeck.length;
@@ -70,16 +70,16 @@ export class IntroDeckAnimation extends PIXI.Container {
 
     initOptionScreen(){
         this.textDescripton = this.addChild(new PIXI.Text(
-`ゲームが進行中にランダムで
-以下のイベントが発生する
+`ゲーム進行中にランダムで
+ルール追加イベントが発生する
 
-＜即時介入＞
-手番のプレイヤーは
-手を止めてイベントを見る
+＜即時イベント＞
+全員手を止めて手番プレイヤーが
+追加ルールを確認する
             
-＜手番終了後＞
-手番のプレイヤーは
-カードを出した後にイベントを見る`, 
+＜行動後イベント＞
+手番プレイヤーの行動終了後
+次のプレイヤーが追加ルールを確認する`, 
         {
             fontFamily: 'Kaisei Decol', 
             fontWeight: 700,
@@ -87,7 +87,7 @@ export class IntroDeckAnimation extends PIXI.Container {
             align: 'center',
             breakWords: true,
             wordWrap: true,
-            wordWrapWidth: 800,
+            wordWrapWidth: 900,
             lineHeight: 80,
         }));
         this.textDescripton.anchor.set(0.5, 0);
@@ -105,6 +105,7 @@ export class IntroDeckAnimation extends PIXI.Container {
         const configContainer = this.addChild(new PIXI.Container());
         //＜発生頻度の設定＞
 
+        // this.minVal = 1;
         this.minVal = 10;
         const uiSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 100, this.minVal));
         uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 80);
@@ -129,6 +130,7 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
 
+        // this.randomVal = 1;
         this.randomVal = 10;
         const randomSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'randomVal', 1, 100, this.randomVal));
         randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 150);
