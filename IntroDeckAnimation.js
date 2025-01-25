@@ -44,21 +44,21 @@ export class IntroDeckAnimation extends PIXI.Container {
 
         this.imageTable = this.addChild(new PIXI.Container());
         this.coverBox = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.stageRect.width, dp.stageRect.height, false, {color: 0x000000}));
-        this.coverBox.alpha = 0.7;
-        // gsap.timeline({delay:2})
-            // .to(this.coverBox, {alpha:0.7, duration:0.5, ease:'none'})
+        // this.coverBox.alpha = 0.7;
+        gsap.timeline({delay:2.2})
+            .to(this.coverBox, {alpha:0.7, duration:0.5, ease:'none'})
 
         Utils.shuffleArray(dp.introDeck);
         const maxDisp = dp.introDeck.length > 20 ? 20 : dp.introDeck.length;
         for(let i = 0; i < maxDisp; i++){
             let card = this.imageTable.addChild(new Card(dp.introDeck[i]));
-            card.alpha = 0;
+            // card.alpha = 0;
             Utils.resizeImage(card, {width: gridX, height: gridX})
             card.position.set(countX * gridX + card.width / 2 + margin / 2, countY * card.height + card.height / 2);
-            Utils.snapshotPos(card);
-            const tl = gsap.timeline({delay:i / 30 + 1.8})
-                .to(card, {alpha:1, y: card.snapshot.y, duration: 0.5}, '<')
-            card.y += 100;
+            // Utils.snapshotPos(card);
+            // const tl = gsap.timeline({delay:i / 30 + 1.8})
+                // .to(card, {alpha:1, y: card.snapshot.y, duration: 0.5}, '<')
+            // card.y += 100;
             if(countX < 3){
                 countX ++;
             }else{
