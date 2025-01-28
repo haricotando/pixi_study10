@@ -101,6 +101,7 @@ export class GameContainer extends PIXI.Container {
     readyToDie(){
         clearTimeout(this.eventInterval);
         this.parent.initGameContainer();
+        this.removeChildren();
         this.parent.removeChild(this);
     }
 
