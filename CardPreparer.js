@@ -138,7 +138,10 @@ export class CardPreparer extends PIXI.Container {
         this.cardBack.x = dp.stageRect.halfWidth;
         this.cardBack.y = dp.stageRect.halfHeight + dp.stageRect.halfHeight/10;
         // this.cardBack.y = message.y + (btnFlipCard.y - message.y) / 2;
-        const cardBackSize = 0.45;
+        /**
+         * @todo ざっくりすぎるので調整
+         */
+        const cardBackSize = 0.45 + (dp.stageRect.aspectRatio * dp.stageRect.aspectRatio / 22);
 
         gsap.timeline()
             .to(this.cardBack, {rotation: Utils.degreesToRadians(Math.random() * 10 -5), duration:0.2, ease:'sine.out'}, '<')

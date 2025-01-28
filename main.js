@@ -72,6 +72,7 @@ function init(){
         negativeHeight    : 0 - app.screen.height,
         negativeHalfWidth : 0 - app.screen.width * 0.5,
         negativeHalfHeight: 0- app.screen.height * 0.5,
+        aspectRatio       : app.screen.height / app.screen.width,
     }
     
     // デバイス分岐でPIXIAPPインスタンス
