@@ -106,7 +106,7 @@ export class IntroDeckAnimation extends PIXI.Container {
         //＜発生頻度の設定＞
 
         // this.minVal = 1;
-        this.minVal = 10;
+        this.minVal = 30;
         const uiSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'minVal', 1, 100, this.minVal));
         uiSlider.position.set(dp.stageRect.halfWidth - uiSlider.width / 2, this.textDescripton.y + this.textDescripton.height + 80);
         // uiSlider.x = 50;
@@ -131,7 +131,7 @@ export class IntroDeckAnimation extends PIXI.Container {
 
 
         // this.randomVal = 1;
-        this.randomVal = 10;
+        this.randomVal = 30;
         const randomSlider = configContainer.addChild(Utils.addUISlider(dp.app, dp.stageRect.width - 200, this, 'randomVal', 1, 100, this.randomVal));
         randomSlider.position.set(dp.stageRect.halfWidth - randomSlider.width / 2, uiSlider.y + 150);
 

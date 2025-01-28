@@ -22,7 +22,7 @@ export const dataProvider = {
         nextInterval  : 0,
         minInterval   : 0,
         randomInterval: 0,
-        showCountdown : true,
+        showCountdown : false,
     },
 
     cardList : [],
